@@ -19,8 +19,6 @@ use Cake\ORM\Entity;
  * @property \Cake\I18n\FrozenTime $date_modification
  *
  * @property \App\Model\Entity\Course $course
- * @property \App\Model\Entity\Instructor $instructor
- * @property \App\Model\Entity\Assistant $assistant
  * @property \App\Model\Entity\Memberhistory[] $memberhistories
  * @property \App\Model\Entity\Reservation[] $reservations
  */
@@ -47,9 +45,9 @@ class Schedule extends Entity
         'memo' => true,
         'date_creation' => true,
         'date_modification' => true,
-        'course' => true,
-        'instructor' => true,
-        'assistant' => true,
+        // 'course' => true,
+        // 'instructor' => true,
+        // 'assistant' => true,
         'memberhistories' => true,
         'reservations' => true
     ];

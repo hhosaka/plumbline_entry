@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\ORM\TableRegistry;
 
 /**
  * Reservations Controller
@@ -12,6 +13,9 @@ use App\Controller\AppController;
  */
 class ReservationsController extends AppController
 {
+    public function initialize(){
+        $this->Schedules = TableRegistry::get('schedules');
+    }
 
     /**
      * Index method
@@ -20,10 +24,18 @@ class ReservationsController extends AppController
      */
     public function index()
     {
+        $this->set('entity',$this->Reservations->newEntity());
+        if($this->request->is('post')){
+            $schedule = $this->Schedules->findByDateTime($this->request->data['date'])->first();
+            $query = $this->Reservations->findByScheduleId($schedule['id']);
+        }
+        else{
+            $query = $this->Reservations->find('all');
+        }
         $this->paginate = [
             'contain' => ['Schedules', 'Members', 'Staffs']
         ];
-        $reservations = $this->paginate($this->Reservations);
+        $reservations = $this->paginate($query);
 
         $this->set(compact('reservations'));
     }

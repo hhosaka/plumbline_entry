@@ -21,7 +21,7 @@ class SchedulesController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['Courses', 'Instructors', 'Assistants']
+            'contain' => ['Courses']
         ];
         $schedules = $this->paginate($this->Schedules);
 
@@ -38,7 +38,7 @@ class SchedulesController extends AppController
     public function view($id = null)
     {
         $schedule = $this->Schedules->get($id, [
-            'contain' => ['Courses', 'Instructors', 'Assistants', 'Memberhistories', 'Reservations']
+            'contain' => ['Courses', 'Memberhistories', 'Reservations']
         ]);
 
         $this->set('schedule', $schedule);
@@ -64,7 +64,7 @@ class SchedulesController extends AppController
         $courses = $this->Schedules->Courses->find('list', ['limit' => 200]);
         $instructors = $this->Schedules->Instructors->find('list', ['limit' => 200]);
         $assistants = $this->Schedules->Assistants->find('list', ['limit' => 200]);
-        $this->set(compact('schedule', 'courses', 'instructors', 'assistants'));
+        $this->set(compact('schedule', 'courses'));
     }
 
     /**
@@ -91,7 +91,7 @@ class SchedulesController extends AppController
         $courses = $this->Schedules->Courses->find('list', ['limit' => 200]);
         $instructors = $this->Schedules->Instructors->find('list', ['limit' => 200]);
         $assistants = $this->Schedules->Assistants->find('list', ['limit' => 200]);
-        $this->set(compact('schedule', 'courses', 'instructors', 'assistants'));
+        $this->set(compact('schedule', 'courses'));
     }
 
     /**

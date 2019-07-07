@@ -45,11 +45,11 @@ class SchedulesTable extends Table
             'foreignKey' => 'course_id',
             'joinType' => 'INNER'
         ]);
-        $this->belongsTo('Instructors', [
+        $this->belongsTo('Staffs', [
             'foreignKey' => 'instructor_id',
             'joinType' => 'INNER'
         ]);
-        $this->belongsTo('Assistants', [
+        $this->belongsTo('Staffs', [
             'foreignKey' => 'assistant_id'
         ]);
         $this->hasMany('Memberhistories', [
@@ -121,8 +121,8 @@ class SchedulesTable extends Table
     public function buildRules(RulesChecker $rules)
     {
         $rules->add($rules->existsIn(['course_id'], 'Courses'));
-        $rules->add($rules->existsIn(['instructor_id'], 'Instructors'));
-        $rules->add($rules->existsIn(['assistant_id'], 'Assistants'));
+        $rules->add($rules->existsIn(['instructor_id'], 'Staffs'));
+        $rules->add($rules->existsIn(['assistant_id'], 'Staffs'));
 
         return $rules;
     }
