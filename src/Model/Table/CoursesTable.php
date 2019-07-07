@@ -9,8 +9,6 @@ use Cake\Validation\Validator;
 /**
  * Courses Model
  *
- * @property \App\Model\Table\CoursestaffsetsTable|\Cake\ORM\Association\HasMany $Coursestaffsets
- * @property \App\Model\Table\EquipmentsetsTable|\Cake\ORM\Association\HasMany $Equipmentsets
  * @property \App\Model\Table\SchedulesTable|\Cake\ORM\Association\HasMany $Schedules
  *
  * @method \App\Model\Entity\Course get($primaryKey, $options = [])
@@ -39,12 +37,6 @@ class CoursesTable extends Table
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
 
-        $this->hasMany('Coursestaffsets', [
-            'foreignKey' => 'course_id'
-        ]);
-        $this->hasMany('Equipmentsets', [
-            'foreignKey' => 'course_id'
-        ]);
         $this->hasMany('Schedules', [
             'foreignKey' => 'course_id'
         ]);
@@ -59,14 +51,9 @@ class CoursesTable extends Table
     public function validationDefault(Validator $validator)
     {
         $validator
-            ->integer('id')
+            ->scalar('id')
+            ->maxLength('id', 16)
             ->allowEmptyString('id', 'create');
-
-        $validator
-            ->scalar('code')
-            ->maxLength('code', 32)
-            ->requirePresence('code', 'create')
-            ->allowEmptyString('code', false);
 
         $validator
             ->scalar('subject')

@@ -16,8 +16,6 @@
         <li><?= $this->Html->link(__('List Schedules'), ['action' => 'index']) ?></li>
         <li><?= $this->Html->link(__('List Courses'), ['controller' => 'Courses', 'action' => 'index']) ?></li>
         <li><?= $this->Html->link(__('New Course'), ['controller' => 'Courses', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Staffs'), ['controller' => 'Staffs', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Staff'), ['controller' => 'Staffs', 'action' => 'add']) ?></li>
         <li><?= $this->Html->link(__('List Memberhistories'), ['controller' => 'Memberhistories', 'action' => 'index']) ?></li>
         <li><?= $this->Html->link(__('New Memberhistory'), ['controller' => 'Memberhistories', 'action' => 'add']) ?></li>
         <li><?= $this->Html->link(__('List Reservations'), ['controller' => 'Reservations', 'action' => 'index']) ?></li>
@@ -31,9 +29,10 @@
         <?php
             echo $this->Form->control('date_time');
             echo $this->Form->control('period');
+            echo $this->Form->control('subject');
             echo $this->Form->control('course_id', ['options' => $courses]);
             echo $this->Form->control('instructor_id');
-            echo $this->Form->control('assistant_id', ['options' => $staffs, 'empty' => true]);
+            echo $this->Form->control('assistant_id');
             echo $this->Form->control('status');
             echo $this->Form->control('memo');
             echo $this->Form->control('date_creation');

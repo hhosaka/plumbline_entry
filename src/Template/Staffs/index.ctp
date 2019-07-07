@@ -8,14 +8,8 @@
     <ul class="side-nav">
         <li class="heading"><?= __('Actions') ?></li>
         <li><?= $this->Html->link(__('New Staff'), ['action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Coursestaffsets'), ['controller' => 'Coursestaffsets', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Coursestaffset'), ['controller' => 'Coursestaffsets', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Licensesets'), ['controller' => 'Licensesets', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Licenseset'), ['controller' => 'Licensesets', 'action' => 'add']) ?></li>
         <li><?= $this->Html->link(__('List Reservations'), ['controller' => 'Reservations', 'action' => 'index']) ?></li>
         <li><?= $this->Html->link(__('New Reservation'), ['controller' => 'Reservations', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Schedulestaffsets'), ['controller' => 'Schedulestaffsets', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Schedulestaffset'), ['controller' => 'Schedulestaffsets', 'action' => 'add']) ?></li>
     </ul>
 </nav>
 <div class="staffs index large-9 medium-8 columns content">
@@ -24,7 +18,6 @@
         <thead>
             <tr>
                 <th scope="col"><?= $this->Paginator->sort('id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('code') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('family_name') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('first_name') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('family_name_kana') ?></th>
@@ -49,8 +42,7 @@
         <tbody>
             <?php foreach ($staffs as $staff): ?>
             <tr>
-                <td><?= $this->Number->format($staff->id) ?></td>
-                <td><?= h($staff->code) ?></td>
+                <td><?= h($staff->id) ?></td>
                 <td><?= h($staff->family_name) ?></td>
                 <td><?= h($staff->first_name) ?></td>
                 <td><?= h($staff->family_name_kana) ?></td>

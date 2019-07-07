@@ -9,16 +9,18 @@ use Cake\ORM\Entity;
  * @property int $id
  * @property \Cake\I18n\FrozenTime $date_time
  * @property int $period
- * @property int $course_id
- * @property int $instructor_id
- * @property int|null $assistant_id
+ * @property string $subject
+ * @property string $course_id
+ * @property string $instructor_id
+ * @property string|null $assistant_id
  * @property string $status
  * @property string|null $memo
  * @property \Cake\I18n\FrozenTime $date_creation
  * @property \Cake\I18n\FrozenTime $date_modification
  *
  * @property \App\Model\Entity\Course $course
- * @property \App\Model\Entity\Staff $staff
+ * @property \App\Model\Entity\Instructor $instructor
+ * @property \App\Model\Entity\Assistant $assistant
  * @property \App\Model\Entity\Memberhistory[] $memberhistories
  * @property \App\Model\Entity\Reservation[] $reservations
  */
@@ -37,6 +39,7 @@ class Schedule extends Entity
     protected $_accessible = [
         'date_time' => true,
         'period' => true,
+        'subject' => true,
         'course_id' => true,
         'instructor_id' => true,
         'assistant_id' => true,
@@ -45,7 +48,8 @@ class Schedule extends Entity
         'date_creation' => true,
         'date_modification' => true,
         'course' => true,
-        'staff' => true,
+        'instructor' => true,
+        'assistant' => true,
         'memberhistories' => true,
         'reservations' => true
     ];

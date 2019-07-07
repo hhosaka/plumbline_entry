@@ -21,7 +21,7 @@ class SchedulesController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['Courses', 'Staffs']
+            'contain' => ['Courses', 'Instructors', 'Assistants']
         ];
         $schedules = $this->paginate($this->Schedules);
 
@@ -38,7 +38,7 @@ class SchedulesController extends AppController
     public function view($id = null)
     {
         $schedule = $this->Schedules->get($id, [
-            'contain' => ['Courses', 'Staffs', 'Memberhistories', 'Reservations']
+            'contain' => ['Courses', 'Instructors', 'Assistants', 'Memberhistories', 'Reservations']
         ]);
 
         $this->set('schedule', $schedule);
@@ -62,8 +62,9 @@ class SchedulesController extends AppController
             $this->Flash->error(__('The schedule could not be saved. Please, try again.'));
         }
         $courses = $this->Schedules->Courses->find('list', ['limit' => 200]);
-        $staffs = $this->Schedules->Staffs->find('list', ['limit' => 200]);
-        $this->set(compact('schedule', 'courses', 'staffs'));
+        $instructors = $this->Schedules->Instructors->find('list', ['limit' => 200]);
+        $assistants = $this->Schedules->Assistants->find('list', ['limit' => 200]);
+        $this->set(compact('schedule', 'courses', 'instructors', 'assistants'));
     }
 
     /**
@@ -88,8 +89,9 @@ class SchedulesController extends AppController
             $this->Flash->error(__('The schedule could not be saved. Please, try again.'));
         }
         $courses = $this->Schedules->Courses->find('list', ['limit' => 200]);
-        $staffs = $this->Schedules->Staffs->find('list', ['limit' => 200]);
-        $this->set(compact('schedule', 'courses', 'staffs'));
+        $instructors = $this->Schedules->Instructors->find('list', ['limit' => 200]);
+        $assistants = $this->Schedules->Assistants->find('list', ['limit' => 200]);
+        $this->set(compact('schedule', 'courses', 'instructors', 'assistants'));
     }
 
     /**

@@ -9,10 +9,7 @@ use Cake\Validation\Validator;
 /**
  * Staffs Model
  *
- * @property \App\Model\Table\CoursestaffsetsTable|\Cake\ORM\Association\HasMany $Coursestaffsets
- * @property \App\Model\Table\LicensesetsTable|\Cake\ORM\Association\HasMany $Licensesets
  * @property \App\Model\Table\ReservationsTable|\Cake\ORM\Association\HasMany $Reservations
- * @property \App\Model\Table\SchedulestaffsetsTable|\Cake\ORM\Association\HasMany $Schedulestaffsets
  *
  * @method \App\Model\Entity\Staff get($primaryKey, $options = [])
  * @method \App\Model\Entity\Staff newEntity($data = null, array $options = [])
@@ -40,16 +37,7 @@ class StaffsTable extends Table
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
 
-        $this->hasMany('Coursestaffsets', [
-            'foreignKey' => 'staff_id'
-        ]);
-        $this->hasMany('Licensesets', [
-            'foreignKey' => 'staff_id'
-        ]);
         $this->hasMany('Reservations', [
-            'foreignKey' => 'staff_id'
-        ]);
-        $this->hasMany('Schedulestaffsets', [
             'foreignKey' => 'staff_id'
         ]);
     }
@@ -63,14 +51,9 @@ class StaffsTable extends Table
     public function validationDefault(Validator $validator)
     {
         $validator
-            ->integer('id')
+            ->scalar('id')
+            ->maxLength('id', 16)
             ->allowEmptyString('id', 'create');
-
-        $validator
-            ->scalar('code')
-            ->maxLength('code', 32)
-            ->requirePresence('code', 'create')
-            ->allowEmptyString('code', false);
 
         $validator
             ->scalar('family_name')

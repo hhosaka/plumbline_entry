@@ -6,8 +6,7 @@ use Cake\ORM\Entity;
 /**
  * Staff Entity
  *
- * @property int $id
- * @property string $code
+ * @property string $id
  * @property string $family_name
  * @property string $first_name
  * @property string $family_name_kana
@@ -45,7 +44,6 @@ class Staff extends Entity
      * @var array
      */
     protected $_accessible = [
-        'code' => true,
         'family_name' => true,
         'first_name' => true,
         'family_name_kana' => true,

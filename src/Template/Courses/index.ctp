@@ -8,10 +8,6 @@
     <ul class="side-nav">
         <li class="heading"><?= __('Actions') ?></li>
         <li><?= $this->Html->link(__('New Course'), ['action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Coursestaffsets'), ['controller' => 'Coursestaffsets', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Coursestaffset'), ['controller' => 'Coursestaffsets', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Equipmentsets'), ['controller' => 'Equipmentsets', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Equipmentset'), ['controller' => 'Equipmentsets', 'action' => 'add']) ?></li>
         <li><?= $this->Html->link(__('List Schedules'), ['controller' => 'Schedules', 'action' => 'index']) ?></li>
         <li><?= $this->Html->link(__('New Schedule'), ['controller' => 'Schedules', 'action' => 'add']) ?></li>
     </ul>
@@ -22,7 +18,6 @@
         <thead>
             <tr>
                 <th scope="col"><?= $this->Paginator->sort('id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('code') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('subject') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('description') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('capacity') ?></th>
@@ -37,8 +32,7 @@
         <tbody>
             <?php foreach ($courses as $course): ?>
             <tr>
-                <td><?= $this->Number->format($course->id) ?></td>
-                <td><?= h($course->code) ?></td>
+                <td><?= h($course->id) ?></td>
                 <td><?= h($course->subject) ?></td>
                 <td><?= h($course->description) ?></td>
                 <td><?= $this->Number->format($course->capacity) ?></td>

@@ -202,10 +202,8 @@ Type::build('timestamp')
 //Inflector::rules('uninflected', ['dontinflectme']);
 //Inflector::rules('transliteration', ['/å/' => 'aa']);
 
-define('SEND_MAIL', true);
+define('SEND_MAIL', false);
 define('TEMPLATE_FOLDER_MAIL', './template/mail/');
-define('MAIL_NAME_SYSTEM', 'Studio Plumbline');
-define('MAIL_ADDRESS_SYSTEM', 'manager@plumbline.xsrv.jp');
-define('MAIL_ADDRESS_OWNER', 'hhosaka183@gmail.com');
-define('SUBJECT_NEW_ENTRY_OWNER', 'Reservation from Plumbline Reservation System');
-define('SUBJECT_NEW_ENTRY_CUSTOMER', 'ご予約ありがとうございます');
+define('SYSTEM_MAIL_NAME', 'Studio Plumbline');
+define('SYSTEM_MAIL_ADDRESS', 'manager@plumbline.xsrv.jp');
+define('OWNER_MAIL_ADDRESS', 'hhosaka183@gmail.com');

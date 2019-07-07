@@ -11,10 +11,6 @@
         <li><?= $this->Form->postLink(__('Delete Course'), ['action' => 'delete', $course->id], ['confirm' => __('Are you sure you want to delete # {0}?', $course->id)]) ?> </li>
         <li><?= $this->Html->link(__('List Courses'), ['action' => 'index']) ?> </li>
         <li><?= $this->Html->link(__('New Course'), ['action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Coursestaffsets'), ['controller' => 'Coursestaffsets', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Coursestaffset'), ['controller' => 'Coursestaffsets', 'action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Equipmentsets'), ['controller' => 'Equipmentsets', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Equipmentset'), ['controller' => 'Equipmentsets', 'action' => 'add']) ?> </li>
         <li><?= $this->Html->link(__('List Schedules'), ['controller' => 'Schedules', 'action' => 'index']) ?> </li>
         <li><?= $this->Html->link(__('New Schedule'), ['controller' => 'Schedules', 'action' => 'add']) ?> </li>
     </ul>
@@ -23,8 +19,8 @@
     <h3><?= h($course->id) ?></h3>
     <table class="vertical-table">
         <tr>
-            <th scope="row"><?= __('Code') ?></th>
-            <td><?= h($course->code) ?></td>
+            <th scope="row"><?= __('Id') ?></th>
+            <td><?= h($course->id) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Subject') ?></th>
@@ -41,10 +37,6 @@
         <tr>
             <th scope="row"><?= __('Memo') ?></th>
             <td><?= h($course->memo) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Id') ?></th>
-            <td><?= $this->Number->format($course->id) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Capacity') ?></th>
@@ -64,68 +56,17 @@
         </tr>
     </table>
     <div class="related">
-        <h4><?= __('Related Coursestaffsets') ?></h4>
-        <?php if (!empty($course->coursestaffsets)): ?>
-        <table cellpadding="0" cellspacing="0">
-            <tr>
-                <th scope="col"><?= __('Id') ?></th>
-                <th scope="col"><?= __('Course Id') ?></th>
-                <th scope="col"><?= __('Staff Id') ?></th>
-                <th scope="col" class="actions"><?= __('Actions') ?></th>
-            </tr>
-            <?php foreach ($course->coursestaffsets as $coursestaffsets): ?>
-            <tr>
-                <td><?= h($coursestaffsets->id) ?></td>
-                <td><?= h($coursestaffsets->course_id) ?></td>
-                <td><?= h($coursestaffsets->staff_id) ?></td>
-                <td class="actions">
-                    <?= $this->Html->link(__('View'), ['controller' => 'Coursestaffsets', 'action' => 'view', $coursestaffsets->id]) ?>
-                    <?= $this->Html->link(__('Edit'), ['controller' => 'Coursestaffsets', 'action' => 'edit', $coursestaffsets->id]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['controller' => 'Coursestaffsets', 'action' => 'delete', $coursestaffsets->id], ['confirm' => __('Are you sure you want to delete # {0}?', $coursestaffsets->id)]) ?>
-                </td>
-            </tr>
-            <?php endforeach; ?>
-        </table>
-        <?php endif; ?>
-    </div>
-    <div class="related">
-        <h4><?= __('Related Equipmentsets') ?></h4>
-        <?php if (!empty($course->equipmentsets)): ?>
-        <table cellpadding="0" cellspacing="0">
-            <tr>
-                <th scope="col"><?= __('Id') ?></th>
-                <th scope="col"><?= __('Course Id') ?></th>
-                <th scope="col"><?= __('Equipment Id') ?></th>
-                <th scope="col" class="actions"><?= __('Actions') ?></th>
-            </tr>
-            <?php foreach ($course->equipmentsets as $equipmentsets): ?>
-            <tr>
-                <td><?= h($equipmentsets->id) ?></td>
-                <td><?= h($equipmentsets->course_id) ?></td>
-                <td><?= h($equipmentsets->equipment_id) ?></td>
-                <td class="actions">
-                    <?= $this->Html->link(__('View'), ['controller' => 'Equipmentsets', 'action' => 'view', $equipmentsets->id]) ?>
-                    <?= $this->Html->link(__('Edit'), ['controller' => 'Equipmentsets', 'action' => 'edit', $equipmentsets->id]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['controller' => 'Equipmentsets', 'action' => 'delete', $equipmentsets->id], ['confirm' => __('Are you sure you want to delete # {0}?', $equipmentsets->id)]) ?>
-                </td>
-            </tr>
-            <?php endforeach; ?>
-        </table>
-        <?php endif; ?>
-    </div>
-    <div class="related">
         <h4><?= __('Related Schedules') ?></h4>
         <?php if (!empty($course->schedules)): ?>
         <table cellpadding="0" cellspacing="0">
             <tr>
                 <th scope="col"><?= __('Id') ?></th>
-                <th scope="col"><?= __('Date') ?></th>
-                <th scope="col"><?= __('Time') ?></th>
-                <th scope="col"><?= __('Location Id') ?></th>
-                <th scope="col"><?= __('Course Id') ?></th>
-                <th scope="col"><?= __('Subject') ?></th>
-                <th scope="col"><?= __('Description') ?></th>
+                <th scope="col"><?= __('Date Time') ?></th>
                 <th scope="col"><?= __('Period') ?></th>
+                <th scope="col"><?= __('Subject') ?></th>
+                <th scope="col"><?= __('Course Id') ?></th>
+                <th scope="col"><?= __('Instructor Id') ?></th>
+                <th scope="col"><?= __('Assistant Id') ?></th>
                 <th scope="col"><?= __('Status') ?></th>
                 <th scope="col"><?= __('Memo') ?></th>
                 <th scope="col"><?= __('Date Creation') ?></th>
@@ -135,13 +76,12 @@
             <?php foreach ($course->schedules as $schedules): ?>
             <tr>
                 <td><?= h($schedules->id) ?></td>
-                <td><?= h($schedules->date) ?></td>
-                <td><?= h($schedules->time) ?></td>
-                <td><?= h($schedules->location_id) ?></td>
-                <td><?= h($schedules->course_id) ?></td>
-                <td><?= h($schedules->subject) ?></td>
-                <td><?= h($schedules->description) ?></td>
+                <td><?= h($schedules->date_time) ?></td>
                 <td><?= h($schedules->period) ?></td>
+                <td><?= h($schedules->subject) ?></td>
+                <td><?= h($schedules->course_id) ?></td>
+                <td><?= h($schedules->instructor_id) ?></td>
+                <td><?= h($schedules->assistant_id) ?></td>
                 <td><?= h($schedules->status) ?></td>
                 <td><?= h($schedules->memo) ?></td>
                 <td><?= h($schedules->date_creation) ?></td>

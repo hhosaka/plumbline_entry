@@ -10,8 +10,8 @@ use Cake\Validation\Validator;
  * Schedules Model
  *
  * @property \App\Model\Table\CoursesTable|\Cake\ORM\Association\BelongsTo $Courses
- * @property |\Cake\ORM\Association\BelongsTo $Instructors
- * @property |\Cake\ORM\Association\BelongsTo $Assistants
+ * @property \App\Model\Table\InstructorsTable|\Cake\ORM\Association\BelongsTo $Instructors
+ * @property \App\Model\Table\AssistantsTable|\Cake\ORM\Association\BelongsTo $Assistants
  * @property \App\Model\Table\MemberhistoriesTable|\Cake\ORM\Association\HasMany $Memberhistories
  * @property \App\Model\Table\ReservationsTable|\Cake\ORM\Association\HasMany $Reservations
  *
@@ -81,6 +81,12 @@ class SchedulesTable extends Table
             ->integer('period')
             ->requirePresence('period', 'create')
             ->allowEmptyString('period', false);
+
+        $validator
+            ->scalar('subject')
+            ->maxLength('subject', 128)
+            ->requirePresence('subject', 'create')
+            ->allowEmptyString('subject', false);
 
         $validator
             ->scalar('status')

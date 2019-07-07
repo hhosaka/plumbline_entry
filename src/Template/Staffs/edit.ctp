@@ -14,14 +14,8 @@
             )
         ?></li>
         <li><?= $this->Html->link(__('List Staffs'), ['action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('List Coursestaffsets'), ['controller' => 'Coursestaffsets', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Coursestaffset'), ['controller' => 'Coursestaffsets', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Licensesets'), ['controller' => 'Licensesets', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Licenseset'), ['controller' => 'Licensesets', 'action' => 'add']) ?></li>
         <li><?= $this->Html->link(__('List Reservations'), ['controller' => 'Reservations', 'action' => 'index']) ?></li>
         <li><?= $this->Html->link(__('New Reservation'), ['controller' => 'Reservations', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Schedulestaffsets'), ['controller' => 'Schedulestaffsets', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Schedulestaffset'), ['controller' => 'Schedulestaffsets', 'action' => 'add']) ?></li>
     </ul>
 </nav>
 <div class="staffs form large-9 medium-8 columns content">
@@ -29,7 +23,6 @@
     <fieldset>
         <legend><?= __('Edit Staff') ?></legend>
         <?php
-            echo $this->Form->control('code');
             echo $this->Form->control('family_name');
             echo $this->Form->control('first_name');
             echo $this->Form->control('family_name_kana');

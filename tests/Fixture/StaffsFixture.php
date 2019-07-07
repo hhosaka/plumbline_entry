@@ -17,13 +17,12 @@ class StaffsFixture extends TestFixture
      */
     // @codingStandardsIgnoreStart
     public $fields = [
-        'id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'autoIncrement' => true, 'precision' => null],
-        'code' => ['type' => 'string', 'length' => 32, 'null' => false, 'default' => null, 'collate' => 'utf8_unicode_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
+        'id' => ['type' => 'string', 'length' => 16, 'null' => false, 'default' => null, 'collate' => 'utf8_unicode_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         'family_name' => ['type' => 'string', 'length' => 128, 'null' => false, 'default' => null, 'collate' => 'utf8_unicode_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         'first_name' => ['type' => 'string', 'length' => 128, 'null' => false, 'default' => null, 'collate' => 'utf8_unicode_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         'family_name_kana' => ['type' => 'string', 'length' => 128, 'null' => false, 'default' => null, 'collate' => 'utf8_unicode_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         'first_name_kana' => ['type' => 'string', 'length' => 128, 'null' => false, 'default' => null, 'collate' => 'utf8_unicode_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
-        'sex' => ['type' => 'string', 'length' => null, 'null' => false, 'default' => null, 'collate' => 'utf8_unicode_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
+        'sex' => ['type' => 'string', 'length' => null, 'null' => false, 'default' => '女性', 'collate' => 'utf8_unicode_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         'birthday' => ['type' => 'date', 'length' => null, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null],
         'phone_number1' => ['type' => 'string', 'length' => 16, 'null' => false, 'default' => null, 'collate' => 'utf8_unicode_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         'phone_number2' => ['type' => 'string', 'length' => 16, 'null' => true, 'default' => null, 'collate' => 'utf8_unicode_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
@@ -56,14 +55,13 @@ class StaffsFixture extends TestFixture
     {
         $this->records = [
             [
-                'id' => 1,
-                'code' => 'Lorem ipsum dolor sit amet',
+                'id' => 'eb7fb374-8869-4096-abe1-4256db88732f',
                 'family_name' => 'Lorem ipsum dolor sit amet',
                 'first_name' => 'Lorem ipsum dolor sit amet',
                 'family_name_kana' => 'Lorem ipsum dolor sit amet',
                 'first_name_kana' => 'Lorem ipsum dolor sit amet',
                 'sex' => 'Lorem ipsum dolor sit amet',
-                'birthday' => '2019-03-21',
+                'birthday' => '2019-07-03',
                 'phone_number1' => 'Lorem ipsum do',
                 'phone_number2' => 'Lorem ipsum do',
                 'email1' => 'Lorem ipsum dolor sit amet',
@@ -74,8 +72,8 @@ class StaffsFixture extends TestFixture
                 'address2' => 'Lorem ipsum dolor sit amet',
                 'status' => 'Lorem ipsum dolor sit amet',
                 'memo' => 'Lorem ipsum dolor sit amet',
-                'creation_date' => 1553169431,
-                'modification_date' => 1553169431
+                'creation_date' => 1562159839,
+                'modification_date' => 1562159839
             ],
         ];
         parent::init();

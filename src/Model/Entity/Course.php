@@ -6,8 +6,7 @@ use Cake\ORM\Entity;
 /**
  * Course Entity
  *
- * @property int $id
- * @property string $code
+ * @property string $id
  * @property string $subject
  * @property string $description
  * @property int $capacity
@@ -34,7 +33,6 @@ class Course extends Entity
      * @var array
      */
     protected $_accessible = [
-        'code' => true,
         'subject' => true,
         'description' => true,
         'capacity' => true,

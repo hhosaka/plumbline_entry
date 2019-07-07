@@ -29,13 +29,13 @@ class EntryController extends AppController {
         $this->set('information',"必要な項目を入力してください。");
     }
 
-    function mail($to, $member, $body_filename){
+    function mail($to, $member, $schedule, $body_filename){
         $json = json_decode(file_get_contents(TEMPLATE_FOLDER_MAIL . $body_filename));
         $email = new Email('default');
-        $email->setFrom([MAIL_ADDRESS_SYSTEM => MAIL_NAME_SYSTEM])
+        $email->setFrom([SYSTEM_MAIL_ADDRESS => SYSTEM_MAIL_NAME])
             ->setTo($to)
             ->setSubject($json->{'subject'})
-            ->send($json->{'body'});
+            ->send($this->convert($json->{'body'},$member, $schedule));
     }
 
     function convert($body,$member,$schedule){
@@ -46,13 +46,19 @@ class EntryController extends AppController {
 
     public function index(){
         $member = $this->Members->newEntity();
+        $email = $this->request->getQuery('email');
+        $subject = $this->request->getQuery('subject');
+        $date = $this->request->getQuery('date');
+        $start_time = $this->request->getQuery('start_time');
+        $this->set('email',$email);
+        $this->set('subject',$subject);
+        $this->set('date',$date);
+        $this->set('start_time',$start_time);
     
         if ($this->request->is('post')) {
             $this->set('information',"<font color = 'red'>入力が正しくない箇所があります。訂正してやり直してください。</font>");
             $member = $this->Members->patchEntity($member, $this->request->getData());
             if ($this->Members->save($member)) {
-                $date = $this->request->query["date"];
-                $start_time = $this->request->query["start_time"];
                 $schedule = $this->Schedules->findByDateTime($date.' '.$start_time)->first();
                 if($schedule==null){
                     return $this->redirect(['action' => 'error', '?'=>['errorCode'=>'0001']]);
@@ -65,9 +71,9 @@ class EntryController extends AppController {
                     $reservation['charge_method'] = "Undefined";
                     if($this->Reservations->saveOrFail($reservation))
                     {
-                        if(!SEND_MAIL){
-                            $this->mail(SYSTEM_MAIL, $member, 'confirmation_system_new_entry_body.json');
-                            $this->mail($member['email'], $member, 'confirmation_customer_new_entry_body.json');
+                        if(SEND_MAIL){
+                            $this->mail(OWNER_MAIL_ADDRESS, $member, $schedule, 'confirmation_system_new_entry_body.json');
+                            $this->mail($member['email1'], $member, $schedule, 'confirmation_customer_new_entry_body.json');
                         }
                         return $this->redirect(['action' => 'done', '?'=>['sentMail'=>$member['email1']]]);
                     }
@@ -78,11 +84,11 @@ class EntryController extends AppController {
     }
 
     public function done(){
-        $this->set('sentMail', $this->request->query['sentMail']);
+        $this->set('sentMail', $this->request->getQuery('sentMail'));
     }
 
     public function error(){
-        $this->set('errorCode', $this->request->query['errorCode']);
+        $this->set('errorCode', $this->request->getQuery('errorCode'));
     }
 }
 

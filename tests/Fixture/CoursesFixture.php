@@ -17,8 +17,7 @@ class CoursesFixture extends TestFixture
      */
     // @codingStandardsIgnoreStart
     public $fields = [
-        'id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'autoIncrement' => true, 'precision' => null],
-        'code' => ['type' => 'string', 'length' => 32, 'null' => false, 'default' => null, 'collate' => 'utf8_unicode_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
+        'id' => ['type' => 'string', 'length' => 16, 'null' => false, 'default' => null, 'collate' => 'utf8_unicode_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         'subject' => ['type' => 'string', 'length' => 128, 'null' => false, 'default' => null, 'collate' => 'utf8_unicode_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         'description' => ['type' => 'string', 'length' => 256, 'null' => false, 'default' => null, 'collate' => 'utf8_unicode_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         'capacity' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
@@ -46,16 +45,15 @@ class CoursesFixture extends TestFixture
     {
         $this->records = [
             [
-                'id' => 1,
-                'code' => 'Lorem ipsum dolor sit amet',
+                'id' => '8179a2c6-d106-43f4-b56c-c5d422c6f9fd',
                 'subject' => 'Lorem ipsum dolor sit amet',
                 'description' => 'Lorem ipsum dolor sit amet',
                 'capacity' => 1,
                 'period' => 1,
                 'status' => 'Lorem ipsum dolor sit amet',
                 'memo' => 'Lorem ipsum dolor sit amet',
-                'creation_date' => 1553169484,
-                'modification_date' => 1553169484
+                'creation_date' => 1561986857,
+                'modification_date' => 1561986857
             ],
         ];
         parent::init();

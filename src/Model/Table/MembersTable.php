@@ -146,8 +146,7 @@ class MembersTable extends Table
             ->scalar('password')
             ->minLength('password', 6)
             ->maxLength('password', 16)
-            ->requirePresence('password', 'create')
-            ->allowEmptyString('password',false);
+            ->allowEmptyString('password');
 
         $validator
             ->scalar('status');

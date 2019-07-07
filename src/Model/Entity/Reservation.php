@@ -9,7 +9,7 @@ use Cake\ORM\Entity;
  * @property int $id
  * @property int $schedule_id
  * @property int $member_id
- * @property int $staff_id
+ * @property string $staff_id
  * @property string $receiving_method
  * @property string $charge_method
  * @property string $status

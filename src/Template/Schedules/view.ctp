@@ -13,8 +13,6 @@
         <li><?= $this->Html->link(__('New Schedule'), ['action' => 'add']) ?> </li>
         <li><?= $this->Html->link(__('List Courses'), ['controller' => 'Courses', 'action' => 'index']) ?> </li>
         <li><?= $this->Html->link(__('New Course'), ['controller' => 'Courses', 'action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Staffs'), ['controller' => 'Staffs', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Staff'), ['controller' => 'Staffs', 'action' => 'add']) ?> </li>
         <li><?= $this->Html->link(__('List Memberhistories'), ['controller' => 'Memberhistories', 'action' => 'index']) ?> </li>
         <li><?= $this->Html->link(__('New Memberhistory'), ['controller' => 'Memberhistories', 'action' => 'add']) ?> </li>
         <li><?= $this->Html->link(__('List Reservations'), ['controller' => 'Reservations', 'action' => 'index']) ?> </li>
@@ -25,12 +23,20 @@
     <h3><?= h($schedule->id) ?></h3>
     <table class="vertical-table">
         <tr>
+            <th scope="row"><?= __('Subject') ?></th>
+            <td><?= h($schedule->subject) ?></td>
+        </tr>
+        <tr>
             <th scope="row"><?= __('Course') ?></th>
             <td><?= $schedule->has('course') ? $this->Html->link($schedule->course->id, ['controller' => 'Courses', 'action' => 'view', $schedule->course->id]) : '' ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Staff') ?></th>
-            <td><?= $schedule->has('staff') ? $this->Html->link($schedule->staff->id, ['controller' => 'Staffs', 'action' => 'view', $schedule->staff->id]) : '' ?></td>
+            <th scope="row"><?= __('Instructor Id') ?></th>
+            <td><?= h($schedule->instructor_id) ?></td>
+        </tr>
+        <tr>
+            <th scope="row"><?= __('Assistant Id') ?></th>
+            <td><?= h($schedule->assistant_id) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Status') ?></th>
@@ -47,10 +53,6 @@
         <tr>
             <th scope="row"><?= __('Period') ?></th>
             <td><?= $this->Number->format($schedule->period) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Instructor Id') ?></th>
-            <td><?= $this->Number->format($schedule->instructor_id) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Date Time') ?></th>
