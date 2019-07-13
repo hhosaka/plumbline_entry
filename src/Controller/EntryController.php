@@ -40,7 +40,10 @@ class EntryController extends AppController {
 
     function convert($body,$member,$schedule){
         $body = str_replace('%name%',$member['family_name'].' '.$member['first_name'],$body);
-        $body = str_replace('%lesson%',$schedule['subject'],$body);
+        $body = str_replace('%email%',$member['email1'],$body);
+        $body = str_replace('%phone%',$member['phone1'],$body);
+        $body = str_replace('%subject%',$schedule['subject'],$body);
+        $body = str_replace('%email%',$schedule['email1'],$body);
         return str_replace('%date_time%',$schedule['date_time'],$body);
     }
 
@@ -72,8 +75,8 @@ class EntryController extends AppController {
                     if($this->Reservations->saveOrFail($reservation))
                     {
                         if(SEND_MAIL){
-                            $this->mail(OWNER_MAIL_ADDRESS, $member, $schedule, 'confirmation_system_new_entry_body.json');
-                            $this->mail($member['email1'], $member, $schedule, 'confirmation_customer_new_entry_body.json');
+                            $this->mail(OWNER_MAIL_ADDRESS, $member, $schedule, 'confirmation_system_new_entry.json');
+                            $this->mail($member['email1'], $member, $schedule, 'confirmation_customer_new_entry.json');
                         }
                         return $this->redirect(['action' => 'done', '?'=>['sentMail'=>$member['email1']]]);
                     }
