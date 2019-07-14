@@ -13,6 +13,7 @@ class EntryController extends AppController {
     public $autoRender = true;
 
     public function initialize(){
+        parent::initialize();
         $this->set('msg','Entry/index');
         $this->Members = TableRegistry::get('members');
         $this->Schedules = TableRegistry::get('schedules');
