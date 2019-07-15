@@ -10,7 +10,6 @@ use Cake\Validation\Validator;
  * Schedules Model
  *
  * @property \App\Model\Table\CoursesTable|\Cake\ORM\Association\BelongsTo $Courses
- * @property \App\Model\Table\InstructorsTable|\Cake\ORM\Association\BelongsTo $Instructors
  * @property \App\Model\Table\AssistantsTable|\Cake\ORM\Association\BelongsTo $Assistants
  * @property \App\Model\Table\MemberhistoriesTable|\Cake\ORM\Association\HasMany $Memberhistories
  * @property \App\Model\Table\ReservationsTable|\Cake\ORM\Association\HasMany $Reservations
@@ -45,11 +44,11 @@ class SchedulesTable extends Table
             'foreignKey' => 'course_id',
             'joinType' => 'INNER'
         ]);
-        $this->belongsTo('Staffs', [
+        $this->belongsTo('Users', [
             'foreignKey' => 'instructor_id',
             'joinType' => 'INNER'
         ]);
-        $this->belongsTo('Staffs', [
+        $this->belongsTo('Users', [
             'foreignKey' => 'assistant_id'
         ]);
         $this->hasMany('Memberhistories', [
@@ -121,8 +120,8 @@ class SchedulesTable extends Table
     public function buildRules(RulesChecker $rules)
     {
         $rules->add($rules->existsIn(['course_id'], 'Courses'));
-        $rules->add($rules->existsIn(['instructor_id'], 'Staffs'));
-        $rules->add($rules->existsIn(['assistant_id'], 'Staffs'));
+        $rules->add($rules->existsIn(['instructor_id'], 'Users'));
+        $rules->add($rules->existsIn(['assistant_id'], 'USers'));
 
         return $rules;
     }

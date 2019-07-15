@@ -58,6 +58,11 @@ class UsersTable extends Table
             ->allowEmptyString('role', false);
 
         $validator
+            ->scalar('nickname')
+            ->maxLength('nickname', 16)
+            ->allowEmptyString('nickname');
+
+        $validator
             ->scalar('family_name')
             ->maxLength('family_name', 128)
             ->requirePresence('family_name', 'create')
@@ -83,6 +88,7 @@ class UsersTable extends Table
 
         $validator
             ->scalar('phone_number1')
+            ->minLength('phone_number1', 10)
             ->maxLength('phone_number1', 16)
             ->requirePresence('phone_number1', 'create')
             ->numeric('phone_number1','"-"(ハイフン)等を入れずに数字のみ入力してください')
@@ -90,6 +96,7 @@ class UsersTable extends Table
 
         $validator
             ->scalar('phone_number2')
+            ->minLength('phone_number2', 10)
             ->maxLength('phone_number2', 16)
             ->numeric('phone_number2','"-"(ハイフン)等を入れずに数字のみ入力してください')
             ->allowEmptyString('phone_number2');
@@ -106,6 +113,7 @@ class UsersTable extends Table
 
         $validator
             ->scalar('zip_code')
+            ->minLength('zip_code', 7)
             ->maxLength('zip_code', 16)
             ->numeric('zip_code','"-"(ハイフン)等を入れずに数字のみ入力してください')
             ->requirePresence('zip_code', 'create')
@@ -144,7 +152,7 @@ class UsersTable extends Table
         $validator
             ->scalar('password')
             ->maxLength('password', 255)
-            ->minLength('password', 8)
+            ->minLength('password', 8,'パスワード’は8文字以上にしてください')
             ->requirePresence('password', 'create')
             ->allowEmptyString('password', false);
 

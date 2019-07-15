@@ -25,13 +25,8 @@
                 <th scope="col"><?= $this->Paginator->sort('date_time') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('period') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('subject') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('course_id') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('instructor_id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('assistant_id') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('status') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('memo') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('date_creation') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('date_modification') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
         </thead>
@@ -42,13 +37,8 @@
                 <td><?= h($schedule->date_time) ?></td>
                 <td><?= $this->Number->format($schedule->period) ?></td>
                 <td><?= h($schedule->subject) ?></td>
-                <td><?= $schedule->has('course') ? $this->Html->link($schedule->course->id, ['controller' => 'Courses', 'action' => 'view', $schedule->course->id]) : '' ?></td>
                 <td><?= h($schedule->instructor_id) ?></td>
-                <td><?= h($schedule->assistant_id) ?></td>
                 <td><?= h($schedule->status) ?></td>
-                <td><?= h($schedule->memo) ?></td>
-                <td><?= h($schedule->date_creation) ?></td>
-                <td><?= h($schedule->date_modification) ?></td>
                 <td class="actions">
                     <?= $this->Html->link(__('View'), ['action' => 'view', $schedule->id]) ?>
                     <?= $this->Html->link(__('Edit'), ['action' => 'edit', $schedule->id]) ?>

@@ -16,27 +16,12 @@
         <thead>
             <tr>
                 <th scope="col"><?= $this->Paginator->sort('id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('username') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('role') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('nickname') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('family_name') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('first_name') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('family_name_kana') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('first_name_kana') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('phone_number1') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('phone_number2') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('sex') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('birthday') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('zip_code') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('prefecture') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('address1') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('address2') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('email1') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('email2') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('password') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('status') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('memo') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('creation_date') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('modification_date') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
         </thead>
@@ -44,27 +29,12 @@
             <?php foreach ($users as $user): ?>
             <tr>
                 <td><?= $this->Number->format($user->id) ?></td>
-                <td><?= h($user->username) ?></td>
-                <td><?= h($user->role) ?></td>
+                <td><?= h($user->nickname) ?></td>
                 <td><?= h($user->family_name) ?></td>
                 <td><?= h($user->first_name) ?></td>
-                <td><?= h($user->family_name_kana) ?></td>
-                <td><?= h($user->first_name_kana) ?></td>
                 <td><?= h($user->phone_number1) ?></td>
-                <td><?= h($user->phone_number2) ?></td>
-                <td><?= h($user->sex) ?></td>
-                <td><?= h($user->birthday) ?></td>
-                <td><?= h($user->zip_code) ?></td>
-                <td><?= h($user->prefecture) ?></td>
-                <td><?= h($user->address1) ?></td>
-                <td><?= h($user->address2) ?></td>
                 <td><?= h($user->email1) ?></td>
-                <td><?= h($user->email2) ?></td>
-                <td><?= h($user->password) ?></td>
                 <td><?= h($user->status) ?></td>
-                <td><?= h($user->memo) ?></td>
-                <td><?= h($user->creation_date) ?></td>
-                <td><?= h($user->modification_date) ?></td>
                 <td class="actions">
                     <?= $this->Html->link(__('View'), ['action' => 'view', $user->id]) ?>
                     <?= $this->Html->link(__('Edit'), ['action' => 'edit', $user->id]) ?>

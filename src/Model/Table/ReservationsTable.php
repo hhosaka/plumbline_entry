@@ -11,7 +11,7 @@ use Cake\Validation\Validator;
  * Reservations Model
  *
  * @property \App\Model\Table\SchedulesTable|\Cake\ORM\Association\BelongsTo $Schedules
- * @property \App\Model\Table\MembersTable|\Cake\ORM\Association\BelongsTo $Members
+ * @property \App\Model\Table\UsersTable|\Cake\ORM\Association\BelongsTo $Users
  * @property \App\Model\Table\StaffsTable|\Cake\ORM\Association\BelongsTo $Staffs
  *
  * @method \App\Model\Entity\Reservation get($primaryKey, $options = [])
@@ -44,11 +44,11 @@ class ReservationsTable extends Table
             'foreignKey' => 'schedule_id',
             'joinType' => 'INNER'
         ]);
-        $this->belongsTo('Members', [
+        $this->belongsTo('Users', [
             'foreignKey' => 'member_id',
             'joinType' => 'INNER'
         ]);
-        $this->belongsTo('Staffs', [
+        $this->belongsTo('Users', [
             'foreignKey' => 'staff_id',
             'joinType' => 'INNER'
         ]);
@@ -109,8 +109,8 @@ class ReservationsTable extends Table
     public function buildRules(RulesChecker $rules)
     {
         $rules->add($rules->existsIn(['schedule_id'], 'Schedules'));
-        $rules->add($rules->existsIn(['member_id'], 'Members'));
-        $rules->add($rules->existsIn(['staff_id'], 'Staffs'));
+        $rules->add($rules->existsIn(['member_id'], 'Users'));
+        $rules->add($rules->existsIn(['staff_id'], 'Users'));
 
         return $rules;
     }

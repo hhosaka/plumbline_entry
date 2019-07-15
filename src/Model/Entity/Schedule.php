@@ -45,9 +45,6 @@ class Schedule extends Entity
         'memo' => true,
         'date_creation' => true,
         'date_modification' => true,
-        // 'course' => true,
-        // 'instructor' => true,
-        // 'assistant' => true,
         'memberhistories' => true,
         'reservations' => true
     ];

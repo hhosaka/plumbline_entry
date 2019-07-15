@@ -6,7 +6,7 @@
 ?>
 
 <div class="members form large-9 medium-8 columns content">
-    <?= $this->Form->create($member) ?>
+    <?= $this->Form->create($user) ?>
     <fieldset>
         <legend>
         お客様情報登録フォーム
