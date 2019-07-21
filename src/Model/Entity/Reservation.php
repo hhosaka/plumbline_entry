@@ -8,8 +8,8 @@ use Cake\ORM\Entity;
  *
  * @property int $id
  * @property int $schedule_id
- * @property int $member_id
- * @property string $staff_id
+ * @property int $customer_id
+ * @property int $instructor_id
  * @property string $receiving_method
  * @property string $charge_method
  * @property string $status
@@ -18,8 +18,8 @@ use Cake\ORM\Entity;
  * @property \Cake\I18n\FrozenTime $modification_date
  *
  * @property \App\Model\Entity\Schedule $schedule
- * @property \App\Model\Entity\Member $member
- * @property \App\Model\Entity\Staff $staff
+ * @property \App\Model\Entity\User $customer
+ * @property \App\Model\Entity\User $instructor
  */
 class Reservation extends Entity
 {
@@ -35,8 +35,8 @@ class Reservation extends Entity
      */
     protected $_accessible = [
         'schedule_id' => true,
-        'member_id' => true,
-        'staff_id' => true,
+        'customer_id' => true,
+        'instructor_id' => true,
         'receiving_method' => true,
         'charge_method' => true,
         'status' => true,
@@ -44,7 +44,7 @@ class Reservation extends Entity
         'creation_date' => true,
         'modification_date' => true,
         'schedule' => true,
-        'member' => true,
-        'staff' => true
+        'customer' => true,
+        'instructor' => true
     ];
 }

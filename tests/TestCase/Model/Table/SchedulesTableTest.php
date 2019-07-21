@@ -25,10 +25,8 @@ class SchedulesTableTest extends TestCase
      */
     public $fixtures = [
         'app.Schedules',
-        'app.Courses',
         'app.Instructors',
         'app.Assistants',
-        'app.Memberhistories',
         'app.Reservations'
     ];
 

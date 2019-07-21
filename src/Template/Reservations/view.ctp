@@ -13,10 +13,10 @@
         <li><?= $this->Html->link(__('New Reservation'), ['action' => 'add']) ?> </li>
         <li><?= $this->Html->link(__('List Schedules'), ['controller' => 'Schedules', 'action' => 'index']) ?> </li>
         <li><?= $this->Html->link(__('New Schedule'), ['controller' => 'Schedules', 'action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Members'), ['controller' => 'Members', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Member'), ['controller' => 'Members', 'action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Staffs'), ['controller' => 'Staffs', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Staff'), ['controller' => 'Staffs', 'action' => 'add']) ?> </li>
+        <li><?= $this->Html->link(__('List Customers'), ['controller' => 'Users', 'action' => 'index']) ?> </li>
+        <li><?= $this->Html->link(__('New Customer'), ['controller' => 'Users', 'action' => 'add']) ?> </li>
+        <li><?= $this->Html->link(__('List Instructors'), ['controller' => 'Users', 'action' => 'index']) ?> </li>
+        <li><?= $this->Html->link(__('New Instructor'), ['controller' => 'Users', 'action' => 'add']) ?> </li>
     </ul>
 </nav>
 <div class="reservations view large-9 medium-8 columns content">
@@ -27,12 +27,12 @@
             <td><?= $reservation->has('schedule') ? $this->Html->link($reservation->schedule->id, ['controller' => 'Schedules', 'action' => 'view', $reservation->schedule->id]) : '' ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Member') ?></th>
-            <td><?= $reservation->has('member') ? $this->Html->link($reservation->member->id, ['controller' => 'Members', 'action' => 'view', $reservation->member->id]) : '' ?></td>
+            <th scope="row"><?= __('Customer') ?></th>
+            <td><?= $reservation->has('customer') ? $this->Html->link($reservation->customer->id, ['controller' => 'Users', 'action' => 'view', $reservation->customer->id]) : '' ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Staff') ?></th>
-            <td><?= $reservation->has('staff') ? $this->Html->link($reservation->staff->id, ['controller' => 'Staffs', 'action' => 'view', $reservation->staff->id]) : '' ?></td>
+            <th scope="row"><?= __('Instructor') ?></th>
+            <td><?= $reservation->has('instructor') ? $this->Html->link($reservation->instructor->id, ['controller' => 'Users', 'action' => 'view', $reservation->instructor->id]) : '' ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Receiving Method') ?></th>

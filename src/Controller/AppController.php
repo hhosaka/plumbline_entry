@@ -50,7 +50,7 @@ class AppController extends Controller
             'authenticate' => [
                 'Form' => [
                     'fields' => [
-                        'username' => 'email1',
+                        'username' => 'username',
                         'password' => 'password'
                     ]
                 ]
@@ -66,4 +66,15 @@ class AppController extends Controller
             'authError' => 'ログインされていません。ログインしてください。'
         ]);
     }
+
+    public function isAuthorized($user = null)
+    {
+        $action = $this->request->params['action'];
+        if($user='admin' || $user='staff')
+        {
+            return true;
+        }
+        return false;
+    }
+
 }

@@ -2,6 +2,8 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\ORM\TableRegistry;
+use Cake\Event\Event;
 
 /**
  * Schedules Controller
@@ -12,6 +14,21 @@ use App\Controller\AppController;
  */
 class SchedulesController extends AppController
 {
+    public function initialize()
+    {
+        parent::initialize();
+        $this->Staffs = TableRegistry::get('users');
+    }
+
+    public function beforeFilter(Event $event)
+    {
+        parent::beforeFilter($event);
+        $staffs = array();
+        foreach ($this->Staffs->find('all',['condition'=>['NOT'=>['Staff->username'=>NULL]]])->all() as $tmp){
+            $staffs += array ($tmp->id => $tmp->username);
+        }
+        $this->set(compact("staffs"));
+    }
 
     /**
      * Index method
@@ -21,7 +38,7 @@ class SchedulesController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['Users']
+            'contain' => ['Instructors', 'Assistants']
         ];
         $schedules = $this->paginate($this->Schedules);
 
@@ -38,7 +55,7 @@ class SchedulesController extends AppController
     public function view($id = null)
     {
         $schedule = $this->Schedules->get($id, [
-            'contain' => ['Courses', 'Memberhistories', 'Reservations']
+            'contain' => ['Instructors', 'Assistants', 'Reservations']
         ]);
 
         $this->set('schedule', $schedule);
@@ -61,10 +78,9 @@ class SchedulesController extends AppController
             }
             $this->Flash->error(__('The schedule could not be saved. Please, try again.'));
         }
-        $courses = $this->Schedules->Courses->find('list', ['limit' => 200]);
-        $instructors = $this->Schedules->Users->find('list', ['limit' => 200]);
-        $assistants = $this->Schedules->Users->find('list', ['limit' => 200]);
-        $this->set(compact('schedule', 'courses'));
+        $instructors = $this->Schedules->Instructors->find('list', ['limit' => 200]);
+        $assistants = $this->Schedules->Assistants->find('list', ['limit' => 200]);
+        $this->set(compact('schedule', 'instructors', 'assistants'));
     }
 
     /**
@@ -88,10 +104,9 @@ class SchedulesController extends AppController
             }
             $this->Flash->error(__('The schedule could not be saved. Please, try again.'));
         }
-        $courses = $this->Schedules->Courses->find('list', ['limit' => 200]);
-        $instructors = $this->Schedules->Users->find('list', ['limit' => 200]);
-        $assistants = $this->Schedules->Users->find('list', ['limit' => 200]);
-        $this->set(compact('schedule', 'courses'));
+        $instructors = $this->Schedules->Instructors->find('list', ['limit' => 200]);
+        $assistants = $this->Schedules->Assistants->find('list', ['limit' => 200]);
+        $this->set(compact('schedule', 'instructors', 'assistants'));
     }
 
     /**

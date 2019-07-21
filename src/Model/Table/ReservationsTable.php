@@ -4,15 +4,14 @@ namespace App\Model\Table;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
-use Cake\ORM\TableRegistry;
 use Cake\Validation\Validator;
 
 /**
  * Reservations Model
  *
  * @property \App\Model\Table\SchedulesTable|\Cake\ORM\Association\BelongsTo $Schedules
- * @property \App\Model\Table\UsersTable|\Cake\ORM\Association\BelongsTo $Users
- * @property \App\Model\Table\StaffsTable|\Cake\ORM\Association\BelongsTo $Staffs
+ * @property \App\Model\Table\UsersTable|\Cake\ORM\Association\BelongsTo $Customers
+ * @property \App\Model\Table\UsersTable|\Cake\ORM\Association\BelongsTo $Instructors
  *
  * @method \App\Model\Entity\Reservation get($primaryKey, $options = [])
  * @method \App\Model\Entity\Reservation newEntity($data = null, array $options = [])
@@ -44,12 +43,14 @@ class ReservationsTable extends Table
             'foreignKey' => 'schedule_id',
             'joinType' => 'INNER'
         ]);
-        $this->belongsTo('Users', [
-            'foreignKey' => 'member_id',
+        $this->belongsTo('Customers', [
+            'className' => 'Users',
+            'foreignKey' => 'customer_id',
             'joinType' => 'INNER'
         ]);
-        $this->belongsTo('Users', [
-            'foreignKey' => 'staff_id',
+        $this->belongsTo('Instructors', [
+            'className' => 'Users',
+            'foreignKey' => 'instructor_id',
             'joinType' => 'INNER'
         ]);
     }
@@ -77,9 +78,7 @@ class ReservationsTable extends Table
             ->allowEmptyString('charge_method', false);
 
         $validator
-            ->scalar('status')
-            ->requirePresence('status', false)
-            ->allowEmptyString('status', false);
+            ->scalar('status');
 
         $validator
             ->scalar('memo')
@@ -87,14 +86,10 @@ class ReservationsTable extends Table
             ->allowEmptyString('memo');
 
         $validator
-            ->dateTime('creation_date')
-            ->requirePresence('creation_date', false)
-            ->allowEmptyDateTime('creation_date', false);
+            ->dateTime('creation_date');
 
         $validator
-            ->dateTime('modification_date')
-            ->requirePresence('modification_date', false)
-            ->allowEmptyDateTime('modification_date', false);
+            ->dateTime('modification_date');
 
         return $validator;
     }
@@ -109,8 +104,8 @@ class ReservationsTable extends Table
     public function buildRules(RulesChecker $rules)
     {
         $rules->add($rules->existsIn(['schedule_id'], 'Schedules'));
-        $rules->add($rules->existsIn(['member_id'], 'Users'));
-        $rules->add($rules->existsIn(['staff_id'], 'Users'));
+        $rules->add($rules->existsIn(['customer_id'], 'Customers'));
+        $rules->add($rules->existsIn(['instructor_id'], 'Instructors'));
 
         return $rules;
     }

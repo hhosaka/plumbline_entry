@@ -9,6 +9,9 @@ use Cake\Validation\Validator;
 /**
  * Users Model
  *
+ * @property |\Cake\ORM\Association\HasMany $Reservations
+ * @property |\Cake\ORM\Association\HasMany $Schedules
+ *
  * @method \App\Model\Entity\User get($primaryKey, $options = [])
  * @method \App\Model\Entity\User newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\User[] newEntities(array $data, array $options = [])
@@ -34,8 +37,12 @@ class UsersTable extends Table
         $this->setTable('users');
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
+
         $this->hasMany('Reservations', [
-            'foreignKey' => 'member_id'
+            'foreignKey' => 'user_id'
+        ]);
+        $this->hasMany('Schedules', [
+            'foreignKey' => 'user_id'
         ]);
     }
 
@@ -52,15 +59,17 @@ class UsersTable extends Table
             ->allowEmptyString('id', 'create');
 
         $validator
+            ->scalar('username')
+            ->maxLength('username', 128)
+            ->requirePresence('username', 'create')
+            ->allowEmptyString('username', false)
+            ->add('username', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
+
+        $validator
             ->scalar('role')
             ->maxLength('role', 20)
             ->requirePresence('role', 'create')
             ->allowEmptyString('role', false);
-
-        $validator
-            ->scalar('nickname')
-            ->maxLength('nickname', 16)
-            ->allowEmptyString('nickname');
 
         $validator
             ->scalar('family_name')
@@ -91,14 +100,14 @@ class UsersTable extends Table
             ->minLength('phone_number1', 10)
             ->maxLength('phone_number1', 16)
             ->requirePresence('phone_number1', 'create')
-            ->numeric('phone_number1','"-"(ハイフン)等を入れずに数字のみ入力してください')
+            ->numeric('phone_number1','"-"(ハイフン)を含まない数字だけで入力してください')
             ->allowEmptyString('phone_number1', false);
 
         $validator
             ->scalar('phone_number2')
             ->minLength('phone_number2', 10)
             ->maxLength('phone_number2', 16)
-            ->numeric('phone_number2','"-"(ハイフン)等を入れずに数字のみ入力してください')
+            ->numeric('phone_number2','"-"(ハイフン)を含まない数字だけで入力してください')
             ->allowEmptyString('phone_number2');
 
         $validator
@@ -115,7 +124,7 @@ class UsersTable extends Table
             ->scalar('zip_code')
             ->minLength('zip_code', 7)
             ->maxLength('zip_code', 16)
-            ->numeric('zip_code','"-"(ハイフン)等を入れずに数字のみ入力してください')
+            ->numeric('zip_code','"-"(ハイフン)を含まない数字だけで入力してください')
             ->requirePresence('zip_code', 'create')
             ->allowEmptyString('zip_code', false);
 
@@ -151,8 +160,8 @@ class UsersTable extends Table
 
         $validator
             ->scalar('password')
-            ->maxLength('password', 255)
-            ->minLength('password', 8,'パスワード’は8文字以上にしてください')
+            ->maxLength('password', 64)
+            ->minLength('password', 8,'8文字以上の文字列を入力してください')
             ->requirePresence('password', 'create')
             ->allowEmptyString('password', false);
 
@@ -171,5 +180,19 @@ class UsersTable extends Table
             ->dateTime('modification_date');
 
         return $validator;
+    }
+
+    /**
+     * Returns a rules checker object that will be used for validating
+     * application integrity.
+     *
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @return \Cake\ORM\RulesChecker
+     */
+    public function buildRules(RulesChecker $rules)
+    {
+        $rules->add($rules->isUnique(['username']));
+
+        return $rules;
     }
 }

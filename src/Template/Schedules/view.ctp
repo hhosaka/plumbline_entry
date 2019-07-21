@@ -11,10 +11,10 @@
         <li><?= $this->Form->postLink(__('Delete Schedule'), ['action' => 'delete', $schedule->id], ['confirm' => __('Are you sure you want to delete # {0}?', $schedule->id)]) ?> </li>
         <li><?= $this->Html->link(__('List Schedules'), ['action' => 'index']) ?> </li>
         <li><?= $this->Html->link(__('New Schedule'), ['action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Courses'), ['controller' => 'Courses', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Course'), ['controller' => 'Courses', 'action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Memberhistories'), ['controller' => 'Memberhistories', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Memberhistory'), ['controller' => 'Memberhistories', 'action' => 'add']) ?> </li>
+        <li><?= $this->Html->link(__('List Instructors'), ['controller' => 'Users', 'action' => 'index']) ?> </li>
+        <li><?= $this->Html->link(__('New Instructor'), ['controller' => 'Users', 'action' => 'add']) ?> </li>
+        <li><?= $this->Html->link(__('List Assistants'), ['controller' => 'Users', 'action' => 'index']) ?> </li>
+        <li><?= $this->Html->link(__('New Assistant'), ['controller' => 'Users', 'action' => 'add']) ?> </li>
         <li><?= $this->Html->link(__('List Reservations'), ['controller' => 'Reservations', 'action' => 'index']) ?> </li>
         <li><?= $this->Html->link(__('New Reservation'), ['controller' => 'Reservations', 'action' => 'add']) ?> </li>
     </ul>
@@ -27,16 +27,12 @@
             <td><?= h($schedule->subject) ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Course') ?></th>
-            <td><?= $schedule->has('course') ? $this->Html->link($schedule->course->id, ['controller' => 'Courses', 'action' => 'view', $schedule->course->id]) : '' ?></td>
+            <th scope="row"><?= __('Instructor') ?></th>
+            <td><?= $schedule->has('instructor') ? $this->Html->link($schedule->instructor->id, ['controller' => 'Users', 'action' => 'view', $schedule->instructor->id]) : '' ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Instructor Id') ?></th>
-            <td><?= h($schedule->instructor_id) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Assistant Id') ?></th>
-            <td><?= h($schedule->assistant_id) ?></td>
+            <th scope="row"><?= __('Assistant') ?></th>
+            <td><?= $schedule->has('assistant') ? $this->Html->link($schedule->assistant->id, ['controller' => 'Users', 'action' => 'view', $schedule->assistant->id]) : '' ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Status') ?></th>
@@ -68,47 +64,14 @@
         </tr>
     </table>
     <div class="related">
-        <h4><?= __('Related Memberhistories') ?></h4>
-        <?php if (!empty($schedule->memberhistories)): ?>
-        <table cellpadding="0" cellspacing="0">
-            <tr>
-                <th scope="col"><?= __('Id') ?></th>
-                <th scope="col"><?= __('Member Id') ?></th>
-                <th scope="col"><?= __('Schedule Id') ?></th>
-                <th scope="col"><?= __('Amount') ?></th>
-                <th scope="col"><?= __('Memo') ?></th>
-                <th scope="col"><?= __('Creation Date') ?></th>
-                <th scope="col"><?= __('Modification Date') ?></th>
-                <th scope="col" class="actions"><?= __('Actions') ?></th>
-            </tr>
-            <?php foreach ($schedule->memberhistories as $memberhistories): ?>
-            <tr>
-                <td><?= h($memberhistories->id) ?></td>
-                <td><?= h($memberhistories->member_id) ?></td>
-                <td><?= h($memberhistories->schedule_id) ?></td>
-                <td><?= h($memberhistories->amount) ?></td>
-                <td><?= h($memberhistories->memo) ?></td>
-                <td><?= h($memberhistories->creation_date) ?></td>
-                <td><?= h($memberhistories->modification_date) ?></td>
-                <td class="actions">
-                    <?= $this->Html->link(__('View'), ['controller' => 'Memberhistories', 'action' => 'view', $memberhistories->id]) ?>
-                    <?= $this->Html->link(__('Edit'), ['controller' => 'Memberhistories', 'action' => 'edit', $memberhistories->id]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['controller' => 'Memberhistories', 'action' => 'delete', $memberhistories->id], ['confirm' => __('Are you sure you want to delete # {0}?', $memberhistories->id)]) ?>
-                </td>
-            </tr>
-            <?php endforeach; ?>
-        </table>
-        <?php endif; ?>
-    </div>
-    <div class="related">
         <h4><?= __('Related Reservations') ?></h4>
         <?php if (!empty($schedule->reservations)): ?>
         <table cellpadding="0" cellspacing="0">
             <tr>
                 <th scope="col"><?= __('Id') ?></th>
                 <th scope="col"><?= __('Schedule Id') ?></th>
-                <th scope="col"><?= __('Member Id') ?></th>
-                <th scope="col"><?= __('Staff Id') ?></th>
+                <th scope="col"><?= __('Customer Id') ?></th>
+                <th scope="col"><?= __('Instructor Id') ?></th>
                 <th scope="col"><?= __('Receiving Method') ?></th>
                 <th scope="col"><?= __('Charge Method') ?></th>
                 <th scope="col"><?= __('Status') ?></th>
@@ -121,8 +84,8 @@
             <tr>
                 <td><?= h($reservations->id) ?></td>
                 <td><?= h($reservations->schedule_id) ?></td>
-                <td><?= h($reservations->member_id) ?></td>
-                <td><?= h($reservations->staff_id) ?></td>
+                <td><?= h($reservations->customer_id) ?></td>
+                <td><?= h($reservations->instructor_id) ?></td>
                 <td><?= h($reservations->receiving_method) ?></td>
                 <td><?= h($reservations->charge_method) ?></td>
                 <td><?= h($reservations->status) ?></td>

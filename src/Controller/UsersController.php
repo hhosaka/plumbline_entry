@@ -13,17 +13,10 @@ use Cake\Event\Event;
  */
 class UsersController extends AppController
 {
-
     public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
-        $this->Auth->allow(['add','login','logout']);
-    }
-
-    public function isAuthorized($user = null)
-    {
-        $action = $this->request->params['action'];
-        return true;
+        $this->Auth->allow(['login']);
     }
 
     public function login()
@@ -36,7 +29,7 @@ class UsersController extends AppController
                 $this->Auth->setUser($user);
                 return $this->redirect($this->Auth->redirectUrl());
             }
-            $this->Flash->error(__('ユーザー名(メールアドレス)またはパスワードが違います。'));
+            $this->Flash->error(__('ユーザー名かパスワードが違います。'));
         }
     }
 

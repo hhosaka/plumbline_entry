@@ -15,21 +15,23 @@
     <table cellpadding="0" cellspacing="0">
         <thead>
             <tr>
-                <th scope="col"><?= $this->Paginator->sort('id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('nickname') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('family_name') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('first_name') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('phone_number1') ?></th>
+                <th scope="col" width="5%"><?= $this->Paginator->sort('id') ?></th>
+                <th scope="col" width="10%"><?= $this->Paginator->sort('username') ?></th>
+                <th scope="col" width="10%"><?= $this->Paginator->sort('role') ?></th>
+                <th scope="col" width="10%"><?= $this->Paginator->sort('family_name') ?></th>
+                <th scope="col" width="10%"><?= $this->Paginator->sort('first_name') ?></th>
+                <th scope="col" width="10%"><?= $this->Paginator->sort('phone_number1') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('email1') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('status') ?></th>
-                <th scope="col" class="actions"><?= __('Actions') ?></th>
+                <th scope="col" width="10%"><?= $this->Paginator->sort('status') ?></th>
+                <th scope="col" width="15%" class="actions"><?= __('Actions') ?></th>
             </tr>
         </thead>
         <tbody>
             <?php foreach ($users as $user): ?>
             <tr>
                 <td><?= $this->Number->format($user->id) ?></td>
-                <td><?= h($user->nickname) ?></td>
+                <td><?= h($user->username) ?></td>
+                <td><?= h($user->role) ?></td>
                 <td><?= h($user->family_name) ?></td>
                 <td><?= h($user->first_name) ?></td>
                 <td><?= h($user->phone_number1) ?></td>

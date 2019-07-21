@@ -34,7 +34,7 @@ class ReservationsController extends AppController
             $query = $this->Reservations->find('all');
         }
         $this->paginate = [
-            'contain' => ['Schedules', 'Users']
+            'contain' => ['Schedules', 'Customers', 'Instructors']
         ];
         $reservations = $this->paginate($query);
 
@@ -51,7 +51,7 @@ class ReservationsController extends AppController
     public function view($id = null)
     {
         $reservation = $this->Reservations->get($id, [
-            'contain' => ['Schedules', 'Users']
+            'contain' => ['Schedules', 'Customers', 'Instructors']
         ]);
 
         $this->set('reservation', $reservation);
@@ -75,9 +75,9 @@ class ReservationsController extends AppController
             $this->Flash->error(__('The reservation could not be saved. Please, try again.'));
         }
         $schedules = $this->Reservations->Schedules->find('list', ['limit' => 200]);
-        $members = $this->Reservations->Users->find('list', ['limit' => 200]);
-        $staffs = $this->Reservations->Users->find('list', ['limit' => 200]);
-        $this->set(compact('reservation', 'schedules', 'members','staffs'));
+        $customers = $this->Reservations->Customers->find('list', ['limit' => 200]);
+        $instructors = $this->Reservations->Instructors->find('list', ['limit' => 200]);
+        $this->set(compact('reservation', 'schedules', 'customers', 'instructors'));
     }
 
     /**
@@ -102,9 +102,9 @@ class ReservationsController extends AppController
             $this->Flash->error(__('The reservation could not be saved. Please, try again.'));
         }
         $schedules = $this->Reservations->Schedules->find('list', ['limit' => 200]);
-        $members = $this->Reservations->Users->find('list', ['limit' => 200]);
-        $staffs = $this->Reservations->Users->find('list', ['limit' => 200]);
-        $this->set(compact('reservation', 'schedules', 'users'));
+        $customers = $this->Reservations->Customers->find('list', ['limit' => 200]);
+        $instructors = $this->Reservations->Instructors->find('list', ['limit' => 200]);
+        $this->set(compact('reservation', 'schedules', 'customers', 'instructors'));
     }
 
     /**

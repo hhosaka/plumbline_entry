@@ -63,8 +63,10 @@ class EntryController extends AppController {
             if ($this->request->is('post')) {
                 $this->set('information',"<font color = 'red'>入力が正しくない箇所があります。訂正してやり直してください。</font>");
                 $user = $this->Users->patchEntity($user, $this->request->getData());
-                $user['password'] = 'password';
-                $user['role'] = 'user';
+                $user['username'] = $user['email1'];
+                $user['password'] = $user['email1'];
+                $user['role'] = 'customer';
+                var_dump($user);
                 if ($this->Users->save($user)) {
                     $reservation = $this->Reservations->newEntity($this->request->getData());
                     $reservation['schedule_id'] = $schedule['id'];

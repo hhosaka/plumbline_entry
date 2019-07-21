@@ -19,8 +19,8 @@ class ReservationsFixture extends TestFixture
     public $fields = [
         'id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'autoIncrement' => true, 'precision' => null],
         'schedule_id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
-        'member_id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
-        'staff_id' => ['type' => 'string', 'length' => 16, 'null' => false, 'default' => null, 'collate' => 'utf8_unicode_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
+        'customer_id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
+        'instructor_id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         'receiving_method' => ['type' => 'string', 'length' => null, 'null' => false, 'default' => 'Direct', 'collate' => 'utf8_unicode_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         'charge_method' => ['type' => 'string', 'length' => null, 'null' => false, 'default' => 'Undefined', 'collate' => 'utf8_unicode_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         'status' => ['type' => 'string', 'length' => null, 'null' => false, 'default' => 'Reserved', 'collate' => 'utf8_unicode_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
@@ -48,14 +48,14 @@ class ReservationsFixture extends TestFixture
             [
                 'id' => 1,
                 'schedule_id' => 1,
-                'member_id' => 1,
-                'staff_id' => 'Lorem ipsum do',
+                'customer_id' => 1,
+                'instructor_id' => 1,
                 'receiving_method' => 'Lorem ipsum dolor sit amet',
                 'charge_method' => 'Lorem ipsum dolor sit amet',
                 'status' => 'Lorem ipsum dolor sit amet',
                 'memo' => 'Lorem ipsum dolor sit amet',
-                'creation_date' => 1562159642,
-                'modification_date' => 1562159642
+                'creation_date' => 1563691250,
+                'modification_date' => 1563691250
             ],
         ];
         parent::init();

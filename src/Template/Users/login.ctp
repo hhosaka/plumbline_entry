@@ -7,10 +7,10 @@
 <?= $this->Flash->render('auth') ?>
     <?= $this->Form->create() ?>
     <fieldset>
-        <legend><?= "登録したメールアドレスとパスワードを入力してください。" ?></legend>
-        <?= $this->Form->control('email1') ?>
+        <legend><?= __('Please enter your username and password') ?></legend>
+        <?= $this->Form->control('username') ?>
         <?= $this->Form->control('password') ?>
     </fieldset>
-    <?= $this->Form->button(__('ログイン')); ?>
+    <?= $this->Form->button(__('Login')); ?>
     <?= $this->Form->end() ?>
 </div>

@@ -8,10 +8,8 @@
     <ul class="side-nav">
         <li class="heading"><?= __('Actions') ?></li>
         <li><?= $this->Html->link(__('List Schedules'), ['action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('List Courses'), ['controller' => 'Courses', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Course'), ['controller' => 'Courses', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Memberhistories'), ['controller' => 'Memberhistories', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Memberhistory'), ['controller' => 'Memberhistories', 'action' => 'add']) ?></li>
+        <li><?= $this->Html->link(__('List Instructors'), ['controller' => 'Users', 'action' => 'index']) ?></li>
+        <li><?= $this->Html->link(__('New Instructor'), ['controller' => 'Users', 'action' => 'add']) ?></li>
         <li><?= $this->Html->link(__('List Reservations'), ['controller' => 'Reservations', 'action' => 'index']) ?></li>
         <li><?= $this->Html->link(__('New Reservation'), ['controller' => 'Reservations', 'action' => 'add']) ?></li>
     </ul>
@@ -24,13 +22,10 @@
             echo $this->Form->control('date_time');
             echo $this->Form->control('period');
             echo $this->Form->control('subject');
-            echo $this->Form->control('course_id', ['options' => $courses]);
-            echo $this->Form->control('instructor_id');
-            echo $this->Form->control('assistant_id');
+            echo $this->Form->control('instructor_id', ['options' => $staffs]);
+            echo $this->Form->control('assistant_id', ['options' => $staffs, 'empty' => true]);
             echo $this->Form->control('status');
             echo $this->Form->control('memo');
-            echo $this->Form->control('date_creation');
-            echo $this->Form->control('date_modification');
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

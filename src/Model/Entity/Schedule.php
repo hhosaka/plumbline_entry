@@ -10,16 +10,15 @@ use Cake\ORM\Entity;
  * @property \Cake\I18n\FrozenTime $date_time
  * @property int $period
  * @property string $subject
- * @property string $course_id
- * @property string $instructor_id
- * @property string|null $assistant_id
+ * @property int $instructor_id
+ * @property int|null $assistant_id
  * @property string $status
  * @property string|null $memo
  * @property \Cake\I18n\FrozenTime $date_creation
  * @property \Cake\I18n\FrozenTime $date_modification
  *
- * @property \App\Model\Entity\Course $course
- * @property \App\Model\Entity\Memberhistory[] $memberhistories
+ * @property \App\Model\Entity\User $instructor
+ * @property \App\Model\Entity\User $assistant
  * @property \App\Model\Entity\Reservation[] $reservations
  */
 class Schedule extends Entity
@@ -38,14 +37,14 @@ class Schedule extends Entity
         'date_time' => true,
         'period' => true,
         'subject' => true,
-        'course_id' => true,
         'instructor_id' => true,
         'assistant_id' => true,
         'status' => true,
         'memo' => true,
         'date_creation' => true,
         'date_modification' => true,
-        'memberhistories' => true,
+        'instructor' => true,
+        'assistant' => true,
         'reservations' => true
     ];
 }

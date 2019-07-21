@@ -9,9 +9,8 @@ use Cake\Validation\Validator;
 /**
  * Schedules Model
  *
- * @property \App\Model\Table\CoursesTable|\Cake\ORM\Association\BelongsTo $Courses
- * @property \App\Model\Table\AssistantsTable|\Cake\ORM\Association\BelongsTo $Assistants
- * @property \App\Model\Table\MemberhistoriesTable|\Cake\ORM\Association\HasMany $Memberhistories
+ * @property \App\Model\Table\UsersTable|\Cake\ORM\Association\BelongsTo $Instructors
+ * @property \App\Model\Table\UsersTable|\Cake\ORM\Association\BelongsTo $Assistants
  * @property \App\Model\Table\ReservationsTable|\Cake\ORM\Association\HasMany $Reservations
  *
  * @method \App\Model\Entity\Schedule get($primaryKey, $options = [])
@@ -40,19 +39,14 @@ class SchedulesTable extends Table
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
 
-        $this->belongsTo('Courses', [
-            'foreignKey' => 'course_id',
-            'joinType' => 'INNER'
-        ]);
-        $this->belongsTo('Users', [
+        $this->belongsTo('Instructors', [
             'foreignKey' => 'instructor_id',
+            'className' => 'Users',
             'joinType' => 'INNER'
         ]);
-        $this->belongsTo('Users', [
+        $this->belongsTo('Assistants', [
+            'className' => 'Users',
             'foreignKey' => 'assistant_id'
-        ]);
-        $this->hasMany('Memberhistories', [
-            'foreignKey' => 'schedule_id'
         ]);
         $this->hasMany('Reservations', [
             'foreignKey' => 'schedule_id'
@@ -119,9 +113,8 @@ class SchedulesTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['course_id'], 'Courses'));
-        $rules->add($rules->existsIn(['instructor_id'], 'Users'));
-        $rules->add($rules->existsIn(['assistant_id'], 'USers'));
+        $rules->add($rules->existsIn(['instructor_id'], 'Instructors'));
+        $rules->add($rules->existsIn(['assistant_id'], 'Assistants'));
 
         return $rules;
     }
