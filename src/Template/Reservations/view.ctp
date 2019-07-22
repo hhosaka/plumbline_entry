@@ -13,10 +13,8 @@
         <li><?= $this->Html->link(__('New Reservation'), ['action' => 'add']) ?> </li>
         <li><?= $this->Html->link(__('List Schedules'), ['controller' => 'Schedules', 'action' => 'index']) ?> </li>
         <li><?= $this->Html->link(__('New Schedule'), ['controller' => 'Schedules', 'action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Customers'), ['controller' => 'Users', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Customer'), ['controller' => 'Users', 'action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Instructors'), ['controller' => 'Users', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Instructor'), ['controller' => 'Users', 'action' => 'add']) ?> </li>
+        <li><?= $this->Html->link(__('List Users'), ['controller' => 'Users', 'action' => 'index']) ?> </li>
+        <li><?= $this->Html->link(__('New User'), ['controller' => 'Users', 'action' => 'add']) ?> </li>
     </ul>
 </nav>
 <div class="reservations view large-9 medium-8 columns content">
@@ -31,8 +29,8 @@
             <td><?= $reservation->has('customer') ? $this->Html->link($reservation->customer->id, ['controller' => 'Users', 'action' => 'view', $reservation->customer->id]) : '' ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Instructor') ?></th>
-            <td><?= $reservation->has('instructor') ? $this->Html->link($reservation->instructor->id, ['controller' => 'Users', 'action' => 'view', $reservation->instructor->id]) : '' ?></td>
+            <th scope="row"><?= __('Staff') ?></th>
+            <td><?= $reservation->has('Staff') ? $this->Html->link($reservation->staff->id, ['controller' => 'Users', 'action' => 'view', $reservation->staff->id]) : '' ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Receiving Method') ?></th>

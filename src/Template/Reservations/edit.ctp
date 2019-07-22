@@ -27,7 +27,7 @@
         <?php
             echo $this->Form->control('schedule_id', ['options' => $schedules]);
             echo $this->Form->control('customer_id', ['options' => $customers]);
-            echo $this->Form->control('instructor_id', ['options' => $instructors]);
+            echo $this->Form->control('staff_id', ['options' => $staffs]);
             echo $this->Form->control('receiving_method');
             echo $this->Form->control('charge_method');
             echo $this->Form->control('status');

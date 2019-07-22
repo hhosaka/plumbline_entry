@@ -14,6 +14,7 @@ use Cake\ORM\TableRegistry;
 class ReservationsController extends AppController
 {
     public function initialize(){
+        parent::initialize();
         $this->Schedules = TableRegistry::get('schedules');
         $this->Users = TableRegistry::get('users');
     }
@@ -34,7 +35,7 @@ class ReservationsController extends AppController
             $query = $this->Reservations->find('all');
         }
         $this->paginate = [
-            'contain' => ['Schedules', 'Customers', 'Instructors']
+            'contain' => ['Schedules', 'Customers', 'Staffs']
         ];
         $reservations = $this->paginate($query);
 
@@ -51,7 +52,7 @@ class ReservationsController extends AppController
     public function view($id = null)
     {
         $reservation = $this->Reservations->get($id, [
-            'contain' => ['Schedules', 'Customers', 'Instructors']
+            'contain' => ['Schedules', 'Customers', 'Staffs']
         ]);
 
         $this->set('reservation', $reservation);
@@ -76,8 +77,8 @@ class ReservationsController extends AppController
         }
         $schedules = $this->Reservations->Schedules->find('list', ['limit' => 200]);
         $customers = $this->Reservations->Customers->find('list', ['limit' => 200]);
-        $instructors = $this->Reservations->Instructors->find('list', ['limit' => 200]);
-        $this->set(compact('reservation', 'schedules', 'customers', 'instructors'));
+        $staffs = $this->Reservations->Staffs->find('list', ['limit' => 200]);
+        $this->set(compact('reservation', 'schedules', 'customers', 'staffs'));
     }
 
     /**
@@ -103,8 +104,8 @@ class ReservationsController extends AppController
         }
         $schedules = $this->Reservations->Schedules->find('list', ['limit' => 200]);
         $customers = $this->Reservations->Customers->find('list', ['limit' => 200]);
-        $instructors = $this->Reservations->Instructors->find('list', ['limit' => 200]);
-        $this->set(compact('reservation', 'schedules', 'customers', 'instructors'));
+        $staffs = $this->Reservations->Staffs->find('list', ['limit' => 200]);
+        $this->set(compact('reservation', 'schedules', 'customers', 'staffs'));
     }
 
     /**

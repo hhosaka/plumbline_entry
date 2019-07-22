@@ -24,13 +24,13 @@
     <table cellpadding="0" cellspacing="0">
         <thead>
             <tr>
-                <th scope="col"><?= $this->Paginator->sort('id') ?></th>
+                <th scope="col" width="5%"><?= $this->Paginator->sort('id') ?></th>
+                <th scope="col" width="15%"><?= $this->Paginator->sort('date') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('schedule_id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('customer_id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('instructor_id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('receiving_method') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('charge_method') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('status') ?></th>
+                <th scope="col" width="10%"><?= $this->Paginator->sort('customer_id') ?></th>
+                <th scope="col" width="10%"><?= $this->Paginator->sort('staff_id') ?></th>
+                <th scope="col" width="10%"><?= $this->Paginator->sort('receiving_method') ?></th>
+                <th scope="col" width="10%"><?= $this->Paginator->sort('status') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
         </thead>
@@ -38,11 +38,11 @@
             <?php foreach ($reservations as $reservation): ?>
             <tr>
                 <td><?= $this->Number->format($reservation->id) ?></td>
+                <td><?= $reservation->schedule->date_time ?></td>
                 <td><?= $reservation->has('schedule') ? $this->Html->link($reservation->schedule->subject, ['controller' => 'Schedules', 'action' => 'view', $reservation->schedule->id]) : '' ?></td>
                 <td><?= $reservation->has('customer') ? $this->Html->link($reservation->customer->family_name.' '.$reservation->customer->first_name , ['controller' => 'Users', 'action' => 'view', $reservation->customer->id]) : '' ?></td>
-                <td><?= $reservation->has('instructor') ? $this->Html->link($reservation->instructor->username, ['controller' => 'Users', 'action' => 'view', $reservation->instructor->id]) : '' ?></td>
+                <td><?= $reservation->has('staff') ? $this->Html->link($reservation->staff->username, ['controller' => 'Users', 'action' => 'view', $reservation->staff->id]) : '' ?></td>
                 <td><?= h($reservation->receiving_method) ?></td>
-                <td><?= h($reservation->charge_method) ?></td>
                 <td><?= h($reservation->status) ?></td>
                 <td class="actions">
                     <?= $this->Html->link(__('View'), ['action' => 'view', $reservation->id]) ?>

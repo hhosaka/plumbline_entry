@@ -23,8 +23,6 @@ class UsersController extends AppController
     {
         if ($this->request->isPost()) {
             $user = $this->Auth->identify();
-            var_dump($this->Users->find('all')->first());
-            var_dump($this->request->data);
             if ($user) {
                 $this->Auth->setUser($user);
                 return $this->redirect($this->Auth->redirectUrl());

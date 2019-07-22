@@ -48,9 +48,9 @@ class ReservationsTable extends Table
             'foreignKey' => 'customer_id',
             'joinType' => 'INNER'
         ]);
-        $this->belongsTo('Instructors', [
+        $this->belongsTo('Staffs', [
             'className' => 'Users',
-            'foreignKey' => 'instructor_id',
+            'foreignKey' => 'staff_id',
             'joinType' => 'INNER'
         ]);
     }
@@ -105,7 +105,7 @@ class ReservationsTable extends Table
     {
         $rules->add($rules->existsIn(['schedule_id'], 'Schedules'));
         $rules->add($rules->existsIn(['customer_id'], 'Customers'));
-        $rules->add($rules->existsIn(['instructor_id'], 'Instructors'));
+        $rules->add($rules->existsIn(['staff_id'], 'Staffs'));
 
         return $rules;
     }
