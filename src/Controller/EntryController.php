@@ -46,71 +46,60 @@ class EntryController extends AppController {
     }
 
     public function index(){
+        $schedule = $this->beforeEntry();
         $user = $this->Users->newEntity();
-        $email = $this->request->getQuery('email');
-        $date = $this->request->getQuery('date');
-        $start_time = $this->request->getQuery('start_time');
-        $this->set('email',$email);
-        $this->set('date',$date);
-        $this->set('start_time',$start_time);
-    
-        $schedule = $this->Schedules->findByDateTime($date.' '.$start_time)->first();
-        if($schedule == null){
-            return $this->redirect(['action' => 'error', '?'=>['errorCode'=>'0001']]);
-        }else{
-            $this->set('subject',$schedule['subject']);
-            if ($this->request->is('post')) {
-                $this->set('information',"<font color = 'red'>入力が正しくない箇所があります。訂正してやり直してください。</font>");
-                $user = $this->Users->patchEntity($user, $this->request->getData());
-                $user['username'] = $user['email1'];
-                $user['password'] = $user['email1'];
-                $user['role'] = 'customer';
-                if ($this->Users->save($user)) {
-                    $reservation = $this->Reservations->newEntity($this->request->getData());
-                    $reservation['schedule_id'] = $schedule['id'];
-                    $reservation['customer_id'] = $user['id'];
-                    $reservation['staff_id'] = 1;//admin
-                    $reservation['receiving_method'] = "byWeb";
-                    $reservation['charge_method'] = "Undefined";
-                    if($this->Reservations->save($reservation)){
-                        if(SEND_MAIL){
-                            $this->mail(OWNER_MAIL_ADDRESS, $user, $schedule, 'confirmation_system_new_entry.json');
-                            $this->mail($user['email1'], $user, $schedule, 'confirmation_customer_new_entry.json');
-                        }
-                        return $this->redirect(['action' => 'done', '?'=>['sentMail'=>$user['email1']]]);
-                    }
-                }
+
+        if ($this->request->is('post')) {
+            $this->set('information',"<font color = 'red'>入力が正しくない箇所があります。訂正してやり直してください。</font>");
+            $user = $this->Users->patchEntity($user, $this->request->getData());
+            $user['username'] = $user['email1'];
+            $user['password'] = $user['email1'];
+            $user['role'] = 'customer';
+            if ($this->Users->save($user)) {
+                $this->entry($user, $schedule);
             }
         }
         $this->set(compact('user'));
     }
 
-    public function entry(){
-        $user = $this->Users->newEntity();
+    private function beforeEntry()
+    {
+        $email = $this->request->getQuery('email');
+        $subject = $this->request->getQuery('subject');
         $date = $this->request->getQuery('date');
         $start_time = $this->request->getQuery('start_time');
-    
         $schedule = $this->Schedules->findByDateTime($date.' '.$start_time)->first();
         if($schedule == null){
             return $this->redirect(['action' => 'error', '?'=>['errorCode'=>'0001']]);
-        }else{
-            $user = $this->Auth->user();
-            if ($this->request->is('post')) {
-                $reservation = $this->Reservations->newEntity($this->request->getData());
-                $reservation['schedule_id'] = $schedule['id'];
-                $reservation['customer_id'] = $user['id'];
-                $reservation['staff_id'] = 1;
-                $reservation['receiving_method'] = "byWeb";
-                $reservation['charge_method'] = "Undefined";
-                if($this->Reservations->save($reservation)){
-                    if(SEND_MAIL){
-                        $this->mail(OWNER_MAIL_ADDRESS, $user, $schedule, 'confirmation_system_entry.json');
-                        $this->mail($user['email1'], $user, $schedule, 'confirmation_customer_entry.json');
-                    }
-                    return $this->redirect(['action' => 'done', '?'=>['sentMail'=>$user['email1']]]);
-                }
-            }
         }
+        $this->set('date',$date);
+        $this->set('start_time',$start_time);
+        $this->set('email',$email);
+        $this->set('subject',$subject);
+        return $schedule;
+    }
+
+    private function entry($user, $schedule){
+    
+        $reservation = $this->Reservations->newEntity($this->request->getData());
+        $reservation['schedule_id'] = $schedule['id'];
+        $reservation['customer_id'] = $user['id'];
+        $reservation['staff_id'] = 1;
+        $reservation['receiving_method'] = "byWeb";
+        $reservation['charge_method'] = "Undefined";
+        if($this->Reservations->save($reservation)){
+            if(SEND_MAIL){
+                $this->mail(OWNER_MAIL_ADDRESS, $user, $schedule, 'confirmation_system_new_entry.json');
+                $this->mail($user['email1'], $user, $schedule, 'confirmation_customer_new_entry.json');
+            }
+            return $this->redirect(['action' => 'done', '?'=>['sentMail'=>$user['email1']]]);
+        }
+    }
+
+    public function reserve(){
+        $user = $this->Auth->getUser();
+        $this->entry($user, $this->beforeEntry());
+        $this->set(compact('user'));
     }
 
     public function done(){

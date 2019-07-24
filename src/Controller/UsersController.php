@@ -25,9 +25,14 @@ class UsersController extends AppController
             $user = $this->Auth->identify();
             if ($user) {
                 $this->Auth->setUser($user);
-                return $this->redirect($this->Auth->redirectUrl());
+                $redirect = $this->Auth->redirectUrl();
+                if($redirect!='/')
+                    return $this->redirect($redirect);
+                //return $this->redirect($redirect);
             }
-            $this->Flash->error(__('ユーザー名かパスワードが違います。'));
+            else{
+                $this->Flash->error(__('ユーザー名かパスワードが違います。'));
+            }
         }
     }
 
