@@ -24,7 +24,7 @@ class EntryController extends AppController {
             'message' => '確認用のメールアドレスが一致しません',
         ]);
         $this->set('information',"必要な項目を入力してください。");
-        $this->Auth->allow(['index','done','error']);
+        $this->Auth->allow(['home','index','done','error']);
     }
 
     function mail($to, $user, $schedule, $template_filename){
@@ -45,7 +45,7 @@ class EntryController extends AppController {
         return str_replace('%date_time%',$schedule['date_time'],$body);
     }
 
-    public function index(){
+    public function guest(){
         $schedule = $this->beforeEntry();
         $user = $this->Users->newEntity();
 
@@ -108,6 +108,10 @@ class EntryController extends AppController {
 
     public function error(){
         $this->set('errorCode', $this->request->getQuery('errorCode'));
+    }
+
+    public function index(){
+
     }
 }
 

@@ -28,7 +28,6 @@ class UsersController extends AppController
                 $redirect = $this->Auth->redirectUrl();
                 if($redirect!='/')
                     return $this->redirect($redirect);
-                //return $this->redirect($redirect);
             }
             else{
                 $this->Flash->error(__('ユーザー名かパスワードが違います。'));
