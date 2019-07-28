@@ -13,6 +13,16 @@ use Cake\Event\Event;
  */
 class UsersController extends AppController
 {
+    public function initialize()
+    {
+        parent::initialize();
+        $validator = $this->Users->getValidator('default');
+        $validator->add('confirm', 'no-misspelling', [
+            'rule' => ['compareWith', 'password'],
+            'message' => '確認用のパスワードが一致しません',
+        ]);
+    }
+
     public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
@@ -131,5 +141,39 @@ class UsersController extends AppController
         }
 
         return $this->redirect(['action' => 'index']);
+    }
+
+    public function changePassword(){
+        $user = $this->Users->get($this->Auth->user()['id']);
+        $oldone = $user['password'];
+        $user['password'] = '';
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            $data = $this->request->getData();
+            if($oldone!=$data['oldone']){
+                $this->Flash->error(__('現在のパスワードが異なります'));
+            }
+            else{
+                $user = $this->Users->patchEntity($user, $data);
+                if ($this->Users->save($user)) {
+                    $this->Flash->success(__('パスワードを変更しました'));
+                    return $this->redirect(['controller'=>'entry', 'action' => 'index']);
+                }
+                $this->Flash->error(__('パスワードは更新できませんでした。確認してやり直してください'));
+                }
+        }
+        $this->set(compact('user'));
+    }
+
+    public function editSelf(){
+        $user = $this->Users->get($this->Auth->user()['id']);
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            $user = $this->Users->patchEntity($user, $this->request->getData());
+            if ($this->Users->save($user)) {
+                $this->Flash->success(__('情報を変更しました'));
+                return $this->redirect(['controller'=>'entry', 'action' => 'index']);
+            }
+            $this->Flash->error(__('情報は更新できませんでした。確認してやり直してください'));
+        }
+        $this->set(compact('user'));
     }
 }

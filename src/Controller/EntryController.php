@@ -96,8 +96,8 @@ class EntryController extends AppController {
         }
     }
 
-    public function reserve(){
-        $user = $this->Auth->getUser();
+    public function member(){
+        $user = $this->Auth->user();
         $this->entry($user, $this->beforeEntry());
         $this->set(compact('user'));
     }
