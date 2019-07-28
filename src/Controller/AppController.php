@@ -69,9 +69,7 @@ class AppController extends Controller
 
     public function isAuthorized($user = null)
     {
-        $action = $this->request->params['action'];
-        if($user='admin' || $user='staff')
-        {
+        if($user='admin' || $user='staff'){
             return true;
         }
         return false;

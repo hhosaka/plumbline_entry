@@ -23,10 +23,22 @@ class UsersController extends AppController
         ]);
     }
 
+    public function isAuthorized($user = null)
+    {
+        $action = $this->request->params['action'];
+
+        if($user='member'){
+            if(in_array($action,['editSelf','changePassword'])){
+                return true;
+            }
+        }
+        return parent::isAuthorized();
+    }
+
     public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
-        $this->Auth->allow(['login']);
+        $this->Auth->allow(['login','edit']);
     }
 
     public function login()
