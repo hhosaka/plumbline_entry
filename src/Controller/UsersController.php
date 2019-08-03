@@ -21,6 +21,11 @@ class UsersController extends AppController
             'rule' => ['compareWith', 'password'],
             'message' => '確認用のパスワードが一致しません',
         ]);
+        $validator->add('confirm_email', 'no-misspelling', [
+            'rule' => ['compareWith', 'email1'],
+            'message' => '確認用のメールアドレスが一致しません',
+        ]);
+
     }
 
     public function isAuthorized($user = null)
@@ -38,7 +43,7 @@ class UsersController extends AppController
     public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
-        $this->Auth->allow(['login']);
+        $this->Auth->allow(['login','firstEntry']);
     }
 
     public function login()
@@ -47,14 +52,14 @@ class UsersController extends AppController
             $user = $this->Auth->identify();
             if ($user) {
                 $this->Auth->setUser($user);
-                $redirect = $this->Auth->redirectUrl();
-                if($redirect!='/')
-                    return $this->redirect($redirect);
+                return $this->redirect($this->Auth->redirectUrl());
             }
             else{
                 $this->Flash->error(__('ユーザー名かパスワードが違います。'));
             }
         }
+        $redirectUrl = $this->Auth->redirectUrl();
+        $this->set('redirectUrl', $redirectUrl);
     }
 
     public function logout()
@@ -172,6 +177,29 @@ class UsersController extends AppController
                 }
                 $this->Flash->error(__('パスワードは更新できませんでした。確認してやり直してください'));
                 }
+        }
+        $this->set(compact('user'));
+    }
+
+
+    public function firstEntry(){
+        $user = $this->Users->newEntity();
+        $redirectUrl = $this->request->getQuery('redirectUrl');
+        echo $redirectUrl;
+        if ($this->request->is('post')) {
+            $user = $this->Users->patchEntity($user, $this->request->getData());
+            $user['username'] = $user['email1'];
+            $buf = str_replace ( '/' , '' ,$user['birthday']); 
+            $user['password'] = $buf;
+            echo $buf;
+            $user['role'] = 'guest';
+            if ($this->Users->save($user)) {
+                $this->Flash->success(__('登録完了しました。'));
+                $this->Auth->setUser($user);
+                
+                return $this->redirect($redirectUrl);
+            }
+            $this->Flash->error(__('情報は更新できませんでした。確認してやり直してください'));
         }
         $this->set(compact('user'));
     }
