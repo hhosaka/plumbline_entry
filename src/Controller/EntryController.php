@@ -67,11 +67,10 @@ class EntryController extends AppController {
     }
 
     public function index(){
-        $date = $this->request->getQuery('date');
-        $start_time = $this->request->getQuery('start_time');
+        $date_time = $this->request->getQuery('date_time');
         //$email = $this->request->getQuery('email');// TODO : a plan
         $user = $this->Auth->user();
-        $schedule = $this->Schedules->findByDateTime($date.' '.$start_time)->first();
+        $schedule = $this->Schedules->findByDateTime($date_time)->first();
         $instructor = $this->Users->findById($schedule['instructor_id'])->first()['username'];
         if($schedule == null){
             $this->Flash->error(__('予約情報が異常です。管理者に問い合わせてください。'));
