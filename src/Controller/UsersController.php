@@ -31,10 +31,9 @@ class UsersController extends AppController
     {
         $action = $this->request->params['action'];
 
-        if($user='member'){
-            if(in_array($action,['controlPanel','editSelf','changePassword'])){
-                return true;
-            }
+        if(in_array($user,['member','guest'])
+            && in_array($action,['controlPanel','editSelf','changePassword'])){
+            return true;
         }
         return parent::isAuthorized();
     }
@@ -193,9 +192,8 @@ class UsersController extends AppController
         if ($this->request->is('post')) {
             $user = $this->Users->patchEntity($user, $this->request->getData());
             $user['username'] = $user['email1'];
-            $buf = str_replace ( '/' , '' ,$user['birthday']); 
+            $buf = str_replace ( '/' , '' ,$user['birthday']);//初期パスワードは誕生日の数字のみ 
             $user['password'] = $buf;
-            echo $buf;
             $user['role'] = 'guest';
             if ($this->Users->save($user)) {
                 $this->Flash->success(__('登録完了しました。'));

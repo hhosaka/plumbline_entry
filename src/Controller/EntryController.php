@@ -14,11 +14,20 @@ class EntryController extends AppController {
 
     public function initialize(){
         parent::initialize();
-        //$this->set('msg','Entry/index');
         $this->Users = TableRegistry::get('users');
         $this->Schedules = TableRegistry::get('schedules');
         $this->Reservations = TableRegistry::get('reservations');
-        $this->Auth->allow(['index']);
+        // $this->Auth->allow(['index']);
+    }
+
+    public function isAuthorized($user = null)
+    {
+        $action = $this->request->params['action'];
+
+        if(in_array($action,['calendar'])){
+            return true;
+        }
+        return parent::isAuthorized();
     }
 
     private function mail($to, $user, $schedule, $template_filename){
@@ -49,8 +58,8 @@ class EntryController extends AppController {
         $reservation['charge_method'] = "Undefined";
         if($this->Reservations->save($reservation)){
             if(SEND_MAIL){
-                $this->mail(OWNER_MAIL_ADDRESS, $user, $schedule, 'confirmation_system_new_entry.json');
-                $this->mail($user['email1'], $user, $schedule, 'confirmation_customer_new_entry.json');
+                $this->mail(OWNER_MAIL_ADDRESS, $user, $schedule, 'confirmation_system_entry.json');
+                $this->mail($user['email1'], $user, $schedule, 'confirmation_customer_entry.json');
             }
             return true;
         }
@@ -75,6 +84,17 @@ class EntryController extends AppController {
             }
         }
         $this->set(compact('user','schedule','instructor'));
+    }
+
+    public function calendar(){
+        $user = $this->Auth->user();
+        $sources = [
+            'admin' => "https://calendar.google.com/calendar/embed?src=9lsmij4qm8qu3mmolje35e4b74%40group.calendar.google.com&ctz=Asia%2FTokyo",
+            'staff' => "https://calendar.google.com/calendar/embed?src=9lsmij4qm8qu3mmolje35e4b74%40group.calendar.google.com&ctz=Asia%2FTokyo",
+            'guest' => "https://calendar.google.com/calendar/embed?src=9lsmij4qm8qu3mmolje35e4b74%40group.calendar.google.com&ctz=Asia%2FTokyo",
+            'member' => "https://calendar.google.com/calendar/embed?src=9lsmij4qm8qu3mmolje35e4b74%40group.calendar.google.com&ctz=Asia%2FTokyo"];
+        $this->set('src', $sources[$user['role']]);
+        $this->set(compact('user'));
     }
 
     public function error(){
