@@ -1,7 +1,15 @@
-<legend><?= __('ユーザー操作画面') ?></legend>
-<ul>
-    <li><?= $this->Html->link('パスワードの変更', ['controller' => 'Users', 'action' => 'changePassword'])  ?></li>
-    <li><?= $this->Html->link('情報の変更', ['controller' => 'Users', 'action' => 'editSelf'])  ?></li>
-    <li><?= $this->Html->link('ログアウト', ['controller' => 'Users', 'action' => 'logout'])  ?></li>
-</ul>
+
+<div class="members form large-9 medium-8 columns content">
+    <fieldset>
+        <legend>予約完了</legend>
+        <?= $user['family_name'];?>様<br>
+        以下の通り、の予約を受け付けました<br>
+        タイトル：<?= $schedule['subject'] ?><br>
+        開始時間：<?= $schedule['date_time'] ?><br>
+        インストラクター：<?= $instructor ?><br>
+        <?= $user['email1'];?>に確認のメールを送付しておりますので、ご確認ください。<br>
+        それでは、当日お待ちしています。
+    </fieldset>
+</div>
+
 

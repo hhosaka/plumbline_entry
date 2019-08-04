@@ -25,7 +25,6 @@ class UsersController extends AppController
             'rule' => ['compareWith', 'email1'],
             'message' => '確認用のメールアドレスが一致しません',
         ]);
-
     }
 
     public function isAuthorized($user = null)
@@ -33,7 +32,7 @@ class UsersController extends AppController
         $action = $this->request->params['action'];
 
         if($user='member'){
-            if(in_array($action,['editSelf','changePassword'])){
+            if(in_array($action,['controlPanel','editSelf','changePassword'])){
                 return true;
             }
         }
@@ -78,6 +77,11 @@ class UsersController extends AppController
         $users = $this->paginate($this->Users);
 
         $this->set(compact('users'));
+    }
+
+    public function controlPanel()
+    {
+
     }
 
     /**
