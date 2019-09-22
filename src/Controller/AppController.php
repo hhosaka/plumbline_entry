@@ -65,6 +65,7 @@ class AppController extends Controller
             ],
             'authError' => 'ログインされていません。ログインしてください。'
         ]);
+        $this->viewBuilder()->setLayout('original');
     }
 
     public function isAuthorized($user = null)
