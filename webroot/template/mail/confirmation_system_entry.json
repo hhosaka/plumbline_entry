@@ -1,4 +1,4 @@
-﻿{
+{
   "subject": "オンライン予約",
   "body": "%name%\n%email%\n%phone%\n%date_time%\n%subject%"
 }

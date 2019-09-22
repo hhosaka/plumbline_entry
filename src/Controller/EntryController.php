@@ -32,17 +32,19 @@ class EntryController extends AppController {
 
     private function mail($to, $user, $schedule, $template_filename){
         $json = json_decode(file_get_contents(TEMPLATE_FOLDER_MAIL . $template_filename));
-        $email = new Email('default');
-        $email->setFrom([SYSTEM_MAIL_ADDRESS => SYSTEM_MAIL_NAME])
-            ->setTo($to)
-            ->setSubject($json->{'subject'})
-            ->send($this->convert($json->{'body'},$user, $schedule));
+        if(SEND_MAIL){
+            $email = new Email('default');
+            $email->setFrom([SYSTEM_MAIL_ADDRESS => SYSTEM_MAIL_NAME])
+                ->setTo($to)
+                ->setSubject($json->{'subject'})
+                ->send($this->convert($json->{'body'},$user, $schedule));
+        }
     }
 
     private function convert($body,$user,$schedule){
         $body = str_replace('%name%',$user['family_name'].' '.$user['first_name'],$body);
         $body = str_replace('%email%',$user['email1'],$body);
-        $body = str_replace('%phone%',$user['phone1'],$body);
+        $body = str_replace('%phone%',$user['phone_number1'],$body);
         $body = str_replace('%subject%',$schedule['subject'],$body);
         $body = str_replace('%email%',$schedule['email1'],$body);
         return str_replace('%date_time%',$schedule['date_time'],$body);
@@ -57,10 +59,8 @@ class EntryController extends AppController {
         $reservation['receiving_method'] = "byWeb";
         $reservation['charge_method'] = "Undefined";
         if($this->Reservations->save($reservation)){
-            if(SEND_MAIL){
-                $this->mail(OWNER_MAIL_ADDRESS, $user, $schedule, 'confirmation_system_entry.json');
-                $this->mail($user['email1'], $user, $schedule, 'confirmation_customer_entry.json');
-            }
+            $this->mail(OWNER_MAIL_ADDRESS, $user, $schedule, 'confirmation_system_entry.json');
+            $this->mail($user['email1'], $user, $schedule, 'confirmation_customer_entry.json');
             return true;
         }
         return false;
