@@ -50,6 +50,10 @@ class EntryController extends AppController {
         return str_replace('%date_time%',$schedule['date_time'],$body);
     }
 
+    private function hasReservation($user, $schedule){
+        return $this->Reservations->findByScheduleIdAndCustomerId($schedule['id'],$user['id'])->first()!=null;
+    }
+
     private function entry($user, $schedule){
     
         $reservation = $this->Reservations->newEntity($this->request->getData());
@@ -66,23 +70,54 @@ class EntryController extends AppController {
         return false;
     }
 
+    private function Update($id,$status,$user, $schedule){
+
+        $reservation = $this->Reservations->newEntity();
+        $reservation['id']=$id;
+        $reservation['status']=$status;
+        if($this->Reservations->save($reservation)){
+            $this->mail(OWNER_MAIL_ADDRESS, $user, $schedule, 'confirmation_system_entry.json');
+            $this->mail($user['email1'], $user, $schedule, 'confirmation_customer_entry.json');
+            return true;
+        }
+        return false;
+    }
+
     public function index(){
         $date_time = $this->request->getQuery('date_time');
-        //$email = $this->request->getQuery('email');// TODO : a plan
         $user = $this->Auth->user();
         $schedule = $this->Schedules->findByDateTime($date_time)->first();
         $instructor = $this->Users->findById($schedule['instructor_id'])->first()['username'];
-        if($schedule == null){
+        if($schedule == null || $instructor == null){
             $this->Flash->error(__('予約情報が異常です。管理者に問い合わせてください。'));
             $this->redirect(['action'=>'error']);
-        }
-        else{
-            if(!$this->entry($user, $schedule)){
-                $this->Flash->error(__('予約の登録時に異常が発生しました。管理者に問い合わせてください。'));
-                $this->redirect(['action'=>'error']);
+        }else{
+            $reservation = $this->Reservations->findByScheduleIdAndCustomerId($schedule['id'],$user['id'])->first();
+            if($this->request->is('post')){
+                if($this->request->data('cancel')!=null){
+                    $this->Update($reservation['id'],'Canceled',$user, $schedule);
+                    $this->Flash->success(__('予約をキャンセルしました。'));
+                }
+                $this->redirect(['action'=>'calendar']);
+            }
+            else{
+                if($reservation!=null){
+                    if($reservation['status']=='Canceled'){
+                        $this->Update($reservation['id'],'Reserved',$user, $schedule);
+                        $this->Flash->success(__('予約を受け付けました。'));
+                    }
+                }else{
+                    if($this->entry($user, $schedule)){
+                        $this->Flash->success(__('予約を受け付けました。'));
+                    }
+                    else{
+                        $this->Flash->error(__('予約の登録時に異常が発生しました。管理者に問い合わせてください。'));
+                        $this->redirect(['action'=>'error']);
+                        }
+                }
+                $this->set(compact('user','schedule','instructor'));
             }
         }
-        $this->set(compact('user','schedule','instructor'));
     }
 
     public function calendar(){
