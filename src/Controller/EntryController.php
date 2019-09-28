@@ -122,13 +122,24 @@ class EntryController extends AppController {
 
     public function calendar(){
         $user = $this->Auth->user();
+
+        $this->paginate = [
+            'contain' => ['Schedules', 'Customers', 'Staffs']
+        ];
+
         $sources = [
             'admin' => "https://calendar.google.com/calendar/embed?src=9lsmij4qm8qu3mmolje35e4b74%40group.calendar.google.com&ctz=Asia%2FTokyo",
             'staff' => "https://calendar.google.com/calendar/embed?src=9lsmij4qm8qu3mmolje35e4b74%40group.calendar.google.com&ctz=Asia%2FTokyo",
             'guest' => "https://calendar.google.com/calendar/embed?src=9lsmij4qm8qu3mmolje35e4b74%40group.calendar.google.com&ctz=Asia%2FTokyo",
             'member' => "https://calendar.google.com/calendar/embed?src=9lsmij4qm8qu3mmolje35e4b74%40group.calendar.google.com&ctz=Asia%2FTokyo"];
         $this->set('src', $sources[$user['role']]);
-        $this->set(compact('user'));
+        $temp = $this->Reservations->find('all',['conditions'=>
+            ['and'=>[
+                'customer_id'=>$user['id'],
+                'Reservations.status'=>'Reserved',
+                'Schedules.date_time >'=> date('Y/m/d H:i')]]]);
+        $reservations = $this->paginate($temp);
+        $this->set(compact('user','reservations'));
     }
 
     public function error(){
